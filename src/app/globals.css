@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
+/*
+ * Maison Aura — paleta inspirada en Gucci Flora (amarillo + oro),
+ * el pan de oro de Klimt, los espejos de Versalles y un prado botánico.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --papel: #fbf6ea;
+  --papel-2: #f4ecd8;
+  --flora: #f3d33b;
+  --oro: #b8892e;
+  --pan: #d9b45a;
+  --laca: #141210;
+  --tinta: #1d1a16;
+  --suave: #6b6153;
+  --lirio: #d9506b;
+  --aciano: #5b7fd1;
+  --hoja: #3e8e4e;
+  --prado: #8b6bc8;
+  --linea: rgb(29 26 22 / 0.14);
+
+  /* Variables por categoría */
+  --hero: var(--flora);
+  --hero-fg: var(--tinta);
+  --acento: var(--lirio);
+}
+
+[data-cat="hombre"] {
+  --hero: var(--laca);
+  --hero-fg: #f6eedb;
+  --acento: #2f5d46;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-papel: var(--papel);
+  --color-papel-2: var(--papel-2);
+  --color-flora: var(--flora);
+  --color-oro: var(--oro);
+  --color-pan: var(--pan);
+  --color-laca: var(--laca);
+  --color-tinta: var(--tinta);
+  --color-suave: var(--suave);
+  --color-lirio: var(--lirio);
+  --color-aciano: var(--aciano);
+  --color-hoja: var(--hoja);
+  --color-prado: var(--prado);
+  --color-linea: var(--linea);
+  --color-hero: var(--hero);
+  --color-hero-fg: var(--hero-fg);
+  --color-acento: var(--acento);
+  --font-display: var(--font-bodoni);
+  --font-sans: var(--font-jost);
+  --font-script: var(--font-pinyon);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--font-jost), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--flora);
+  color: var(--tinta);
+}
+
+:focus-visible {
+  outline: 2px solid var(--oro);
+  outline-offset: 3px;
+}
+
+.titulo {
+  font-family: var(--font-bodoni), serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.versalitas {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.dorado {
+  background: linear-gradient(135deg, #8a6420 0%, #d9b45a 28%, #f6e3a1 46%, #b8892e 64%, #7a5718 100%);
+}
+
+.texto-dorado {
+  background: linear-gradient(135deg, #8a6420 0%, #d9b45a 30%, #f3dc95 48%, #b8892e 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes marquesina {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquesina {
+  animation: marquesina 38s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquesina {
+    animation: none;
+  }
 }
