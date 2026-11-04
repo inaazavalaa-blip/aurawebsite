@@ -4,8 +4,11 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { Ramo } from "@/components/ornamentos/Botanica";
 import type { Imagen } from "@/content/categorias";
+import type { Lang } from "@/i18n/config";
+import { dic } from "@/i18n/diccionarios";
 
 type Props = {
+  lang: Lang;
   antes?: Imagen;
   despues?: Imagen;
   /** Texto del espacio mientras no haya foto real. */
@@ -16,7 +19,8 @@ type Props = {
  * Comparador antes/después. Sin fotos muestra espacios listos para las fotos
  * reales de clientas y clientes (siempre con su consentimiento).
  */
-export default function AntesDespues({ antes, despues, pie = "Tu foto aquí" }: Props) {
+export default function AntesDespues({ lang, antes, despues, pie = "" }: Props) {
+  const t = dic(lang).comunes;
   const [pos, setPos] = useState(50);
   const caja = useRef<HTMLDivElement>(null);
   const arrastrando = useRef(false);
@@ -47,7 +51,7 @@ export default function AntesDespues({ antes, despues, pie = "Tu foto aquí" }: 
         ) : (
           <div className="relative h-full overflow-hidden bg-flora">
             <Ramo className="absolute -bottom-4 right-[6%] h-[62%] opacity-90" />
-            <span className="versalitas absolute right-[13%] top-[30%] text-[0.6rem]">Después</span>
+            <span className="versalitas absolute right-[13%] top-[30%] text-[0.6rem]">{t.despues}</span>
           </div>
         )}
       </div>
@@ -58,7 +62,7 @@ export default function AntesDespues({ antes, despues, pie = "Tu foto aquí" }: 
           <Image src={antes.src} alt={antes.alt} fill sizes="50vw" className="object-cover" />
         ) : (
           <div className="relative h-full bg-[#d8d2c6]">
-            <span className="versalitas absolute left-[13%] top-[30%] text-[0.6rem] text-tinta/70">Antes</span>
+            <span className="versalitas absolute left-[13%] top-[30%] text-[0.6rem] text-tinta/70">{t.antes}</span>
             <span className="absolute inset-x-[16%] bottom-[30%] text-center text-[0.6rem] tracking-[0.14em] text-tinta/60 uppercase">
               {pie}
             </span>
@@ -79,7 +83,7 @@ export default function AntesDespues({ antes, despues, pie = "Tu foto aquí" }: 
         max={100}
         value={pos}
         onChange={(e) => setPos(Number(e.target.value))}
-        aria-label="Comparar antes y después"
+        aria-label={t.compararAria}
         className="absolute inset-x-[20%] bottom-[8%] h-6 cursor-ew-resize opacity-0 focus-visible:opacity-100"
       />
     </div>

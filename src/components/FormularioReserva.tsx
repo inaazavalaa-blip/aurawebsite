@@ -3,24 +3,27 @@
 import { useState, type FormEvent } from "react";
 import { IconoWhatsApp } from "@/components/ui";
 import { enlaces, whatsappUrl, type Categoria } from "@/content/categorias";
+import type { Lang } from "@/i18n/config";
+import { dic } from "@/i18n/diccionarios";
 
 const campo =
   "w-full border-b border-tinta/25 bg-transparent py-3 outline-none transition-colors placeholder:text-suave/60 focus:border-oro";
 
-export default function FormularioReserva({ cat }: { cat: Categoria }) {
+export default function FormularioReserva({ lang, cat }: { lang: Lang; cat: Categoria }) {
+  const t = dic(lang).reserva;
   const [enviado, setEnviado] = useState(false);
 
   function mensaje(form: HTMLFormElement) {
     const d = new FormData(form);
-    return [
-      `Hola Aura, soy ${d.get("nombre")} y quiero reservar (${cat.label}).`,
-      `Servicio: ${d.get("servicio")}`,
-      `Modalidad: ${d.get("modalidad")}`,
-      d.get("fecha") ? `Fecha preferida: ${d.get("fecha")}` : "",
-      d.get("mensaje") ? `Lo que me gustaría cambiar: ${d.get("mensaje")}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
+    const valor = (k: string) => String(d.get(k) ?? "");
+    return t.mensaje({
+      nombre: valor("nombre"),
+      cat: cat.label,
+      servicio: valor("servicio"),
+      modalidad: valor("modalidad"),
+      fecha: valor("fecha"),
+      cambio: valor("mensaje"),
+    });
   }
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -32,35 +35,35 @@ export default function FormularioReserva({ cat }: { cat: Categoria }) {
   function porCorreo(e: React.MouseEvent<HTMLButtonElement>) {
     const form = e.currentTarget.form;
     if (!form || !form.reportValidity()) return;
-    window.location.href = `mailto:${enlaces.email}?subject=${encodeURIComponent(`Reserva Aura (${cat.label})`)}&body=${encodeURIComponent(mensaje(form))}`;
+    window.location.href = `mailto:${enlaces.email}?subject=${encodeURIComponent(t.asunto(cat.label))}&body=${encodeURIComponent(mensaje(form))}`;
   }
 
   return (
     <form onSubmit={onSubmit} className="grid gap-8 sm:grid-cols-2">
       <label className="sm:col-span-2">
-        <span className="versalitas text-[0.6rem] text-suave">Tu nombre</span>
-        <input name="nombre" required autoComplete="name" placeholder="¿Cómo te llamas?" className={campo} />
+        <span className="versalitas text-[0.6rem] text-suave">{t.nombre}</span>
+        <input name="nombre" required autoComplete="name" placeholder={t.nombrePh} className={campo} />
       </label>
       <label>
-        <span className="versalitas text-[0.6rem] text-suave">Servicio</span>
+        <span className="versalitas text-[0.6rem] text-suave">{t.servicio}</span>
         <select name="servicio" required defaultValue="" className={campo}>
           <option value="" disabled>
-            Elige una experiencia
+            {t.servicioPh}
           </option>
           {cat.paquetes.map((p) => (
             <option key={p.nombre}>{p.nombre}</option>
           ))}
-          <option>Aún no lo sé, quiero asesoría</option>
+          <option>{t.noSe}</option>
         </select>
       </label>
       <label>
-        <span className="versalitas text-[0.6rem] text-suave">Fecha preferida</span>
+        <span className="versalitas text-[0.6rem] text-suave">{t.fecha}</span>
         <input name="fecha" type="date" className={campo} />
       </label>
       <fieldset className="sm:col-span-2">
-        <legend className="versalitas text-[0.6rem] text-suave">Modalidad</legend>
+        <legend className="versalitas text-[0.6rem] text-suave">{t.modalidad}</legend>
         <div className="mt-3 flex gap-6">
-          {["En línea", "Presencial"].map((m, i) => (
+          {t.modalidades.map((m, i) => (
             <label key={m} className="flex cursor-pointer items-center gap-2">
               <input type="radio" name="modalidad" value={m} defaultChecked={i === 0} className="accent-[var(--oro)]" />
               {m}
@@ -69,27 +72,27 @@ export default function FormularioReserva({ cat }: { cat: Categoria }) {
         </div>
       </fieldset>
       <label className="sm:col-span-2">
-        <span className="versalitas text-[0.6rem] text-suave">¿Qué te gustaría cambiar?</span>
-        <textarea name="mensaje" rows={3} placeholder="Cabello, estilo, armario…" className={`${campo} resize-none`} />
+        <span className="versalitas text-[0.6rem] text-suave">{t.cambiar}</span>
+        <textarea name="mensaje" rows={3} placeholder={t.cambiarPh} className={`${campo} resize-none`} />
       </label>
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
         <button
           type="submit"
           className="inline-flex items-center gap-3 rounded-full bg-[#1f7a4d] px-7 py-4 text-[0.75rem] tracking-[0.16em] text-white uppercase transition hover:brightness-110"
         >
-          <IconoWhatsApp className="h-4 w-4" /> Enviar por WhatsApp
+          <IconoWhatsApp className="h-4 w-4" /> {t.enviar}
         </button>
         <button
           type="button"
           onClick={porCorreo}
           className="rounded-full border border-tinta/30 px-6 py-4 text-[0.75rem] tracking-[0.16em] uppercase hover:border-tinta"
         >
-          Prefiero correo
+          {t.correo}
         </button>
       </div>
       {enviado && (
         <p className="text-[0.85rem] text-hoja sm:col-span-2" role="status">
-          Abrimos WhatsApp con tu mensaje listo. Solo tienes que enviarlo y te responderemos muy pronto.
+          {t.enviado}
         </p>
       )}
     </form>

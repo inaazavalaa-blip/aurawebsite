@@ -8,7 +8,10 @@ import { FondoKlimt } from "@/components/ornamentos/Klimt";
 import { Destello, EspejoSol, MarcoArco } from "@/components/ornamentos/Marcos";
 import PanDeOro from "@/components/three/PanDeOroLazy";
 import { Flecha } from "@/components/ui";
+import { SwitchIdioma } from "@/components/Cabecera";
 import { categorias, type CategoriaSlug } from "@/content/categorias";
+import { ruta, type Lang } from "@/i18n/config";
+import { dic } from "@/i18n/diccionarios";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -17,15 +20,16 @@ const lados: { slug: CategoriaSlug; estilo: string }[] = [
   { slug: "hombre", estilo: "bg-laca text-[#f6eedb]" },
 ];
 
-export default function Choix() {
+export default function Choix({ lang }: { lang: Lang }) {
+  const t = dic(lang).choix;
   return (
     <main className="relative flex min-h-svh flex-col overflow-hidden md:flex-row">
       {lados.map(({ slug, estilo }, i) => {
-        const cat = categorias[slug];
+        const cat = categorias[lang][slug];
         return (
           <Link
             key={slug}
-            href={`/${slug}`}
+            href={ruta(lang, slug)}
             className={`group relative flex min-h-[50svh] flex-1 items-center justify-center overflow-hidden px-6 py-14 outline-none md:min-h-svh ${estilo}`}
           >
             {slug === "mujer" ? (
@@ -54,7 +58,7 @@ export default function Choix() {
                 <p className="versalitas opacity-70">{cat.choix.caption}</p>
                 <h2 className="titulo mt-3 text-6xl italic md:text-8xl">{cat.label}</h2>
                 <span className="versalitas mt-5 inline-flex items-center gap-3 border-b border-current/40 pb-2 transition-colors group-hover:border-oro group-hover:text-oro group-focus-visible:text-oro">
-                  Entrar <Flecha />
+                  {t.entrar} <Flecha />
                 </span>
               </div>
             </motion.div>
@@ -78,9 +82,11 @@ export default function Choix() {
         </EspejoSol>
       </motion.div>
 
+      <SwitchIdioma lang={lang} className="absolute right-4 top-4 z-40 bg-papel/90 text-tinta md:right-6 md:top-6" />
+
       <p className="pointer-events-none absolute inset-x-0 bottom-8 z-30 hidden items-center justify-center gap-4 text-center md:flex">
         <Destello className="h-3 w-3" />
-        <span className="titulo rounded-full bg-papel/90 px-6 py-2 text-lg italic text-tinta">¿Qué colección deseas descubrir?</span>
+        <span className="titulo rounded-full bg-papel/90 px-6 py-2 text-lg italic text-tinta">{t.pregunta}</span>
         <Destello className="h-3 w-3" />
       </p>
     </main>

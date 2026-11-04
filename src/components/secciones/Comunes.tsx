@@ -8,6 +8,8 @@ import { Destello, EspejoSol } from "@/components/ornamentos/Marcos";
 import PiezaIcono from "@/components/vitrina/PiezaIcono";
 import { BotonPrincipal, Encabezado, Flecha, IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Area, type Categoria } from "@/content/categorias";
+import { ruta, type Lang } from "@/i18n/config";
+import { dic } from "@/i18n/diccionarios";
 
 export const contenedor = "mx-auto max-w-[1440px] px-5 md:px-10";
 
@@ -66,22 +68,21 @@ export function IlustracionArea({ area, cat }: { area: Area; cat: Categoria }) {
   );
 }
 
-export function Medallones({ cat }: { cat: Categoria }) {
+export function Medallones({ lang, cat }: { lang: Lang; cat: Categoria }) {
+  const t = dic(lang).comunes;
   return (
     <section className="relative bg-papel">
       <div className={`${contenedor} py-24 md:py-32`}>
         <Reveal>
-          <Encabezado eyebrow="El cambio es total" centrado>
-            No es solo ropa. <em className="text-oro">Es todo lo que eres.</em>
+          <Encabezado eyebrow={t.medallonesEyebrow} centrado>
+            {t.medallonesTitulo} <em className="text-oro">{t.medallonesEnfasis}</em>
           </Encabezado>
-          <p className="mx-auto mt-6 max-w-xl text-center leading-[1.8] text-suave">
-            Una imagen convincente nace de cinco piezas que trabajan juntas. Por eso las transformamos todas.
-          </p>
+          <p className="mx-auto mt-6 max-w-xl text-center leading-[1.8] text-suave">{t.medallonesTexto}</p>
         </Reveal>
         <ol className="mt-16 grid grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-5">
           {cat.areas.map((area, i) => (
             <Reveal as="li" key={area.id} delay={i * 90} className={i === 4 ? "col-span-2 md:col-span-1" : ""}>
-              <Link href={`/${cat.slug}/transformacion#${area.id}`} className="group block text-center">
+              <Link href={`${ruta(lang, cat.slug, "transformacion")}#${area.id}`} className="group block text-center">
                 <EspejoSol className="mx-auto w-full max-w-[220px] transition-transform duration-700 group-hover:rotate-6 group-hover:scale-105">
                   <IlustracionArea area={area} cat={cat} />
                 </EspejoSol>
@@ -97,47 +98,44 @@ export function Medallones({ cat }: { cat: Categoria }) {
   );
 }
 
-export function CitaKlimt() {
+export function CitaKlimt({ lang }: { lang: Lang }) {
+  const t = dic(lang).comunes;
   return (
     <section className="relative overflow-hidden bg-laca py-28 text-papel md:py-36">
       <FondoKlimt variante="espirales" opacidad={0.35} />
       <Reveal className="relative mx-auto max-w-4xl px-5 text-center">
         <Destello className="mx-auto h-6 w-6" />
         <blockquote className="titulo mt-8 text-[clamp(2rem,4.4vw,3.8rem)] italic leading-tight">
-          «La elegancia es cuando el interior es tan bello como el exterior.»
+          {t.cita}
         </blockquote>
-        <p className="versalitas mt-8 text-pan">Coco Chanel</p>
+        <p className="versalitas mt-8 text-pan">{t.citaAutor}</p>
       </Reveal>
     </section>
   );
 }
 
-export function LlamadoFinal({ cat }: { cat: Categoria }) {
+export function LlamadoFinal({ lang, cat }: { lang: Lang; cat: Categoria }) {
+  const t = dic(lang);
   return (
     <section className="relative overflow-hidden bg-flora">
       <Guirnalda className="h-14 w-full" />
       <div className={`${contenedor} grid gap-10 py-20 md:grid-cols-[1.4fr_1fr] md:items-center md:py-28`}>
         <Reveal>
           <h2 className="titulo text-[clamp(2.6rem,6vw,5.4rem)]">
-            Tu cambio empieza <em>con un mensaje.</em>
+            {t.comunes.llamadoTitulo} <em>{t.comunes.llamadoEnfasis}</em>
           </h2>
-          <p className="mt-6 max-w-lg leading-[1.8] text-tinta/80">
-            Cuéntanos qué quieres transformar. Te respondemos por WhatsApp con una propuesta hecha para ti.
-          </p>
+          <p className="mt-6 max-w-lg leading-[1.8] text-tinta/80">{t.comunes.llamadoTexto}</p>
         </Reveal>
         <Reveal delay={150} className="flex flex-col items-start gap-4 md:items-end">
-          <BotonPrincipal
-            href={whatsappUrl(`Hola Aura, quiero agendar mi transformación (${cat.label}).`)}
-            externo
-          >
+          <BotonPrincipal href={whatsappUrl(t.wa.agendar(cat.label))} externo>
             <IconoWhatsApp className="h-4 w-4" />
-            Escríbenos por WhatsApp
+            {t.comunes.llamadoBoton}
           </BotonPrincipal>
           <Link
-            href={`/${cat.slug}/reserva`}
+            href={ruta(lang, cat.slug, "reserva")}
             className="group inline-flex items-center gap-3 text-[0.8rem] tracking-[0.14em] uppercase"
           >
-            O reserva en línea <Flecha />
+            {t.comunes.llamadoReserva} <Flecha />
           </Link>
         </Reveal>
       </div>

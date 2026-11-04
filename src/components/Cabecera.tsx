@@ -5,13 +5,17 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Logo } from "@/components/ui";
-import { categorias, paginas, slugs, whatsappUrl, type CategoriaSlug } from "@/content/categorias";
+import { categorias, slugs, whatsappUrl, type CategoriaSlug } from "@/content/categorias";
+import { analizarRuta, ruta, type Lang, type SeccionId } from "@/i18n/config";
+import { dic } from "@/i18n/diccionarios";
+import { enlacesNav } from "@/i18n/navegacion";
 
-export default function Cabecera({ cat }: { cat: CategoriaSlug }) {
+export default function Cabecera({ lang, cat }: { lang: Lang; cat: CategoriaSlug }) {
   const pathname = usePathname();
+  const t = dic(lang);
+  const { seccion: actual } = analizarRuta(pathname);
   const [abierto, setAbierto] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const subruta = pathname.replace(`/${cat}`, "");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -31,43 +35,42 @@ export default function Cabecera({ cat }: { cat: CategoriaSlug }) {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-6 px-5 md:px-10">
-        <Link href={`/${cat}`} aria-label={`Aura ${categorias[cat].label}, inicio`} onClick={() => setAbierto(false)}>
+        <Link href={ruta(lang, cat)} aria-label={t.nav.inicioAria(categorias[lang][cat].label)} onClick={() => setAbierto(false)}>
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Principal">
-          {paginas.map((p) => {
-            const activo = subruta === p.ruta;
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label={lang === "es" ? "Principal" : "Main"}>
+          {enlacesNav(lang).map((p) => {
+            const activo = actual === p.seccion;
             return (
               <Link
-                key={p.ruta}
-                href={`/${cat}${p.ruta}`}
+                key={p.label}
+                href={ruta(lang, cat, p.seccion)}
                 aria-current={activo ? "page" : undefined}
-                className="relative py-2 text-[0.8rem] tracking-[0.08em] transition-colors hover:text-oro"
+                className="relative whitespace-nowrap py-2 text-[0.8rem] tracking-[0.08em] transition-colors hover:text-oro"
               >
                 {p.label}
-                {activo && (
-                  <motion.span layoutId="nav-activo" className="absolute inset-x-0 -bottom-0.5 h-px bg-oro" />
-                )}
+                {activo && <motion.span layoutId="nav-activo" className="absolute inset-x-0 -bottom-0.5 h-px bg-oro" />}
               </Link>
             );
           })}
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
-          <SwitchCategoria cat={cat} subruta={subruta} />
+        <div className="hidden items-center gap-4 lg:flex">
+          <SwitchCategoria lang={lang} cat={cat} seccion={actual} />
+          <SwitchIdioma lang={lang} cat={cat} seccion={actual} />
           <Link
-            href={`/${cat}/reserva`}
+            href={ruta(lang, cat, "reserva")}
             className="dorado rounded-full px-6 py-3 text-[0.72rem] font-medium tracking-[0.18em] text-laca uppercase transition hover:brightness-110"
           >
-            Reservar
+            {t.nav.reservar}
           </Link>
         </div>
 
         <button
           type="button"
           className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-1.5 lg:hidden"
-          aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
+          aria-label={abierto ? t.nav.cerrarMenu : t.nav.abrirMenu}
           aria-expanded={abierto}
           onClick={() => setAbierto((v) => !v)}
         >
@@ -79,22 +82,17 @@ export default function Cabecera({ cat }: { cat: CategoriaSlug }) {
       <AnimatePresence>
         {abierto && (
           <motion.nav
-            aria-label="Menú móvil"
+            aria-label="Menu"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 flex flex-col bg-flora px-6 pb-10 pt-28"
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-flora px-6 pb-10 pt-28"
           >
-            {[...paginas, { ruta: "/reserva", label: "Reserva" }].map((p, i) => (
-              <motion.div
-                key={p.ruta}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + i * 0.05 }}
-              >
+            {[...enlacesNav(lang), { seccion: "reserva" as SeccionId, label: t.nav.reserva }].map((p, i) => (
+              <motion.div key={p.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.05 }}>
                 <Link
-                  href={`/${cat}${p.ruta}`}
+                  href={ruta(lang, cat, p.seccion)}
                   onClick={() => setAbierto(false)}
                   className="titulo block border-b border-tinta/15 py-3 text-4xl"
                 >
@@ -102,10 +100,11 @@ export default function Cabecera({ cat }: { cat: CategoriaSlug }) {
                 </Link>
               </motion.div>
             ))}
-            <div className="mt-auto flex flex-wrap items-center gap-4">
-              <SwitchCategoria cat={cat} subruta={subruta} />
+            <div className="mt-auto flex flex-wrap items-center gap-3 pt-8">
+              <SwitchCategoria lang={lang} cat={cat} seccion={actual} />
+              <SwitchIdioma lang={lang} cat={cat} seccion={actual} />
               <a
-                href={whatsappUrl(`Hola Aura, me gustaría información (${categorias[cat].label}).`)}
+                href={whatsappUrl(t.wa.info(categorias[lang][cat].label))}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full bg-laca px-5 py-3 text-[0.72rem] tracking-[0.16em] text-papel uppercase"
@@ -120,19 +119,47 @@ export default function Cabecera({ cat }: { cat: CategoriaSlug }) {
   );
 }
 
-function SwitchCategoria({ cat, subruta }: { cat: CategoriaSlug; subruta: string }) {
+function SwitchCategoria({ lang, cat, seccion }: { lang: Lang; cat: CategoriaSlug; seccion?: SeccionId }) {
   return (
     <div className="flex rounded-full border border-tinta/20 p-1 text-[0.65rem] font-medium tracking-[0.2em] uppercase">
       {slugs.map((s) => (
         <Link
           key={s}
-          href={`/${s}${subruta}`}
+          href={ruta(lang, s, seccion)}
           aria-current={s === cat ? "page" : undefined}
           className={`rounded-full px-4 py-2 transition-colors ${s === cat ? "bg-laca text-papel" : "hover:text-oro"}`}
         >
-          {categorias[s].label}
+          {categorias[lang][s].label}
         </Link>
       ))}
     </div>
+  );
+}
+
+/** Enlace a la misma página en el otro idioma. */
+export function SwitchIdioma({
+  lang,
+  cat,
+  seccion,
+  className = "",
+}: {
+  lang: Lang;
+  cat?: CategoriaSlug;
+  seccion?: SeccionId;
+  className?: string;
+}) {
+  const otro: Lang = lang === "es" ? "en" : "es";
+  const t = dic(lang).nav;
+  return (
+    <Link
+      href={ruta(otro, cat, seccion)}
+      hrefLang={otro}
+      lang={otro}
+      aria-label={t.idiomaAria}
+      title={t.idioma}
+      className={`grid h-10 w-10 place-items-center rounded-full border border-tinta/20 text-[0.65rem] font-medium tracking-[0.12em] transition-colors hover:border-oro hover:text-oro ${className}`}
+    >
+      {t.idiomaCorto}
+    </Link>
   );
 }

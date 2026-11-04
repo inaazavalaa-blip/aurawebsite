@@ -1,4 +1,5 @@
 import type { CategoriaSlug } from "@/content/categorias";
+import type { Lang } from "@/i18n/config";
 
 export type TipoPieza =
   | "vestido"
@@ -174,7 +175,7 @@ const piezasHombre: Pieza[] = [
   p("h-perfume", "perfume", "Fragancia", "#d9b45a", "oro"),
 ];
 
-export const piezas: Record<CategoriaSlug, Pieza[]> = {
+const piezasBase: Record<CategoriaSlug, Pieza[]> = {
   mujer: piezasMujer,
   hombre: piezasHombre,
 };
@@ -184,7 +185,7 @@ export type Ocasion = (typeof ocasiones)[number];
 
 export type Outfit = { nombre: string; ocasion: Ocasion; piezas: string[]; nota: string };
 
-export const outfits: Record<CategoriaSlug, Outfit[]> = {
+const outfitsBase: Record<CategoriaSlug, Outfit[]> = {
   mujer: [
     { nombre: "Poder suave", ocasion: "Oficina", piezas: ["m-blazer-aciano", "m-blusa-marfil", "m-pantalon-negro", "m-mocasin-negro", "m-bolso-negro"], nota: "El azul aciano proyecta confianza sin perder frescura." },
     { nombre: "Mañana dorada", ocasion: "Oficina", piezas: ["m-blazer-camel", "m-blusa-marfil", "m-falda-lila", "m-tacon-nude", "m-reloj-oro"], nota: "Neutros cálidos con un toque de color inesperado." },
@@ -207,6 +208,106 @@ export const outfits: Record<CategoriaSlug, Outfit[]> = {
   ],
 };
 
-export function piezaPorId(cat: CategoriaSlug, id: string) {
-  return piezas[cat].find((x) => x.id === id);
+
+export const etiquetaOcasion: Record<Lang, Record<Ocasion, string>> = {
+  es: { Oficina: "Oficina", Cita: "Cita", Evento: "Evento", "Fin de semana": "Fin de semana" },
+  en: { Oficina: "Office", Cita: "Date", Evento: "Event", "Fin de semana": "Weekend" },
+};
+
+const nombresEn: Record<string, string> = {
+  "m-vestido-negro": "Black dress",
+  "m-pantalon-negro": "Tailored trousers",
+  "m-bolso-negro": "Handbag",
+  "m-mocasin-negro": "Loafer",
+  "m-tacon-negro": "Black stiletto",
+  "m-blusa-marfil": "Silk blouse",
+  "m-playera-blanca": "White tee",
+  "m-tenis-blancos": "White sneakers",
+  "m-collar-perlas": "Pearl necklace",
+  "m-vestido-lirio": "Lily dress",
+  "m-blusa-rosa": "Pink blouse",
+  "m-clutch-rosa": "Pink clutch",
+  "m-labial-rosa": "Pink lipstick",
+  "m-falda-lila": "Pleated skirt",
+  "m-vestido-largo-lila": "Evening gown",
+  "m-panuelo-prado": "Silk scarf",
+  "m-jeans": "Straight jeans",
+  "m-blazer-aciano": "Cornflower blazer",
+  "m-bolso-azul": "Blue bag",
+  "m-vestido-verde": "Garden dress",
+  "m-falda-verde": "Midi skirt",
+  "m-aretes-esmeralda": "Emerald earrings",
+  "m-vestido-flora": "Flora dress",
+  "m-bolso-amarillo": "Yellow bag",
+  "m-tacon-amarillo": "Yellow heel",
+  "m-perfume-flora": "Floral perfume",
+  "m-sombrero-paja": "Straw hat",
+  "m-blazer-camel": "Camel blazer",
+  "m-tacon-nude": "Nude heel",
+  "m-aretes-oro": "Gold earrings",
+  "m-cinturon-oro": "Gold belt",
+  "m-lentes-carey": "Tortoiseshell glasses",
+  "m-reloj-oro": "Gold watch",
+  "h-saco-negro": "Tuxedo",
+  "h-oxford-negro": "Black oxford",
+  "h-mono-negro": "Bow tie",
+  "h-cinturon-negro": "Leather belt",
+  "h-lentes": "Sunglasses",
+  "h-pantalon-gris": "Grey trousers",
+  "h-abrigo-gris": "Grey coat",
+  "h-reloj": "Steel watch",
+  "h-camisa-blanca": "White shirt",
+  "h-playera-blanca": "White tee",
+  "h-tenis-blancos": "White sneakers",
+  "h-panuelo-blanco": "White pocket square",
+  "h-camisa-rosa": "Pink shirt",
+  "h-corbata-lila": "Lilac tie",
+  "h-saco-azul": "Navy blazer",
+  "h-camisa-celeste": "Sky-blue shirt",
+  "h-jeans": "Dark jeans",
+  "h-corbata-azul": "Blue tie",
+  "h-saco-verde": "Bottle-green blazer",
+  "h-corbata-verde": "Green tie",
+  "h-playera-verde": "Olive tee",
+  "h-panuelo-flora": "Yellow pocket square",
+  "h-playera-amarilla": "Yellow polo",
+  "h-corbata-oro": "Gold tie",
+  "h-pantalon-arena": "Sand trousers",
+  "h-mocasin-cafe": "Brown loafer",
+  "h-abrigo-camel": "Camel coat",
+  "h-bota-cafe": "Brown boot",
+  "h-perfume": "Fragrance",
+};
+
+const outfitsEn: Record<string, { nombre: string; nota: string }> = {
+  "Poder suave": { nombre: "Soft power", nota: "Cornflower blue projects confidence without losing freshness." },
+  "Mañana dorada": { nombre: "Golden morning", nota: "Warm neutrals with an unexpected touch of colour." },
+  Flora: { nombre: "Flora", nota: "Luminous yellow, gold and a pink lip." },
+  Lirio: { nombre: "Lily", nota: "Romantic and confident: the colour does the work." },
+  "Prado de noche": { nombre: "Night meadow", nota: "Violet and emerald, like a Klimt garden." },
+  "Negro absoluto": { nombre: "Absolute black", nota: "The classic, woken up with yellow." },
+  Domingo: { nombre: "Sunday", nota: "Flawless basics and one statement accessory." },
+  Jardín: { nombre: "Garden", nota: "Fresh, youthful and effortless." },
+  Consejo: { nombre: "Boardroom", nota: "Navy and gold: authority with warmth." },
+  "Gris ejecutivo": { nombre: "Executive grey", nota: "Monochrome, precise and modern." },
+  Terraza: { nombre: "Terrace", nota: "Bottle green and a yellow pocket square people remember." },
+  "Rosa suave": { nombre: "Soft pink", nota: "Pink, worn well, signals confidence." },
+  Gala: { nombre: "Gala", nota: "The tuxedo, flawless." },
+  "Verde botella": { nombre: "Bottle green", nota: "An elegant alternative to black." },
+  Sábado: { nombre: "Saturday", nota: "Basics with a coat that lifts everything." },
+  Campo: { nombre: "Countryside", nota: "Earth tones, texture and comfort." },
+};
+
+export function piezasDe(lang: Lang, cat: CategoriaSlug): Pieza[] {
+  if (lang === "es") return piezasBase[cat];
+  return piezasBase[cat].map((x) => ({ ...x, nombre: nombresEn[x.id] ?? x.nombre }));
+}
+
+export function outfitsDe(lang: Lang, cat: CategoriaSlug): Outfit[] {
+  if (lang === "es") return outfitsBase[cat];
+  return outfitsBase[cat].map((o) => ({ ...o, ...outfitsEn[o.nombre] }));
+}
+
+export function piezaPorId(lang: Lang, cat: CategoriaSlug, id: string) {
+  return piezasDe(lang, cat).find((x) => x.id === id);
 }

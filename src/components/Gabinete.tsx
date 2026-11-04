@@ -7,71 +7,36 @@ import { Guirnalda } from "@/components/ornamentos/Botanica";
 import { BesoRodin, Busto, Camafeo, FrascoPerfume, SagradoCorazon } from "@/components/ornamentos/Curiosidades";
 import { EspejoCuadrilobulo, EspejoSol } from "@/components/ornamentos/Marcos";
 import { imagenes } from "@/content/categorias";
+import type { Lang } from "@/i18n/config";
+import { dic, type Diccionario } from "@/i18n/diccionarios";
 
-type Objeto = { id: string; nombre: string; origen: string; texto: string; dibujo: ReactNode };
+type ObjetoId = keyof Diccionario["maison"]["objetos"];
 
-const objetos: Objeto[] = [
-  {
-    id: "versalles",
-    nombre: "El espejo sol",
-    origen: "Versalles",
-    texto:
-      "Los espejos dorados de Versalles nos recuerdan que verse es un ritual. En Aura, cada cambio empieza frente a un espejo: el que te devuelve tu mejor versión.",
-    dibujo: (
-      <EspejoSol className="w-full">
-        <Image src={imagenes.versalles.src} alt="" fill sizes="160px" className="object-cover" />
-      </EspejoSol>
-    ),
-  },
-  {
-    id: "klimt",
-    nombre: "El pan de oro",
-    origen: "Klimt, El beso",
-    texto:
-      "Oro, mosaicos y un prado de flores: Klimt nos enseñó que lo sofisticado también puede ser alegre. Por eso nuestro oro siempre va acompañado de color.",
-    dibujo: (
-      <EspejoCuadrilobulo className="w-full">
-        <Image src={imagenes.klimt.src} alt="" fill sizes="160px" className="object-cover object-[50%_30%]" />
-      </EspejoCuadrilobulo>
-    ),
-  },
-  {
-    id: "rodin",
-    nombre: "El abrazo de mármol",
-    origen: "Rodin, Le Baiser",
-    texto:
-      "La escultura francesa de Rodin habla de cercanía. Así trabajamos: una asesoría íntima, a tu lado, sin juicios y con mucho cuidado.",
-    dibujo: <BesoRodin className="w-full" />,
-  },
-  {
-    id: "flora",
-    nombre: "El frasco amarillo",
-    origen: "Un jardín embotellado",
-    texto:
-      "Amarillo luminoso, tapa dorada y flores pintadas: la frescura que buscamos en cada look. Elegante, sí; solemne, nunca.",
-    dibujo: <FrascoPerfume className="mx-auto w-[70%]" />,
-  },
-  {
-    id: "busto",
-    nombre: "El busto y las perlas",
-    origen: "El detalle",
-    texto:
-      "Un collar bien elegido cambia un look entero. Cuidamos los accesorios, el escote y cada detalle que enmarca tu rostro.",
-    dibujo: <Busto className="mx-auto w-[80%]" />,
-  },
-  {
-    id: "corazon",
-    nombre: "El sagrado corazón",
-    origen: "La pasión",
-    texto:
-      "Hacemos esto con el corazón. Detrás de cada transformación hay una historia, y la tuya merece ser contada con orgullo.",
-    dibujo: <SagradoCorazon className="mx-auto w-[80%]" />,
-  },
-];
+const dibujos: Record<ObjetoId, ReactNode> = {
+  versalles: (
+    <EspejoSol className="w-full">
+      <Image src={imagenes.es.versalles.src} alt="" fill sizes="160px" className="object-cover" />
+    </EspejoSol>
+  ),
+  klimt: (
+    <EspejoCuadrilobulo className="w-full">
+      <Image src={imagenes.es.klimt.src} alt="" fill sizes="160px" className="object-cover object-[50%_30%]" />
+    </EspejoCuadrilobulo>
+  ),
+  rodin: <BesoRodin className="w-full" />,
+  flora: <FrascoPerfume className="mx-auto w-[70%]" />,
+  busto: <Busto className="mx-auto w-[80%]" />,
+  corazon: <SagradoCorazon className="mx-auto w-[80%]" />,
+};
+
+const orden: ObjetoId[] = ["versalles", "klimt", "rodin", "flora", "busto", "corazon"];
 
 /** Gabinete de curiosidades: las inspiraciones de la marca, como un escaparate de anticuario. */
-export default function Gabinete() {
-  const [activo, setActivo] = useState(objetos[0]);
+export default function Gabinete({ lang }: { lang: Lang }) {
+  const textos = dic(lang).maison.objetos;
+  const objetos = orden.map((id) => ({ id, ...textos[id], dibujo: dibujos[id] }));
+  const [activoId, setActivoId] = useState<ObjetoId>("versalles");
+  const activo = objetos.find((o) => o.id === activoId) ?? objetos[0];
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
@@ -82,8 +47,8 @@ export default function Gabinete() {
             <button
               key={o.id}
               type="button"
-              onClick={() => setActivo(o)}
-              onMouseEnter={() => setActivo(o)}
+              onClick={() => setActivoId(o.id)}
+              onMouseEnter={() => setActivoId(o.id)}
               aria-pressed={activo.id === o.id}
               className="group flex flex-col items-center border-b-[3px] border-pan/60 px-2 pb-4 pt-6"
             >

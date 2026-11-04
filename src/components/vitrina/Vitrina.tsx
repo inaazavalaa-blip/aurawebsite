@@ -8,15 +8,18 @@ import { Destello } from "@/components/ornamentos/Marcos";
 import { IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Categoria } from "@/content/categorias";
 import {
+  etiquetaOcasion,
   familias,
   lugarDe,
   ocasiones,
-  outfits,
-  piezas as todas,
+  outfitsDe,
+  piezasDe,
   type Lugar,
   type Ocasion,
   type Pieza,
 } from "@/content/vitrina";
+import type { Lang } from "@/i18n/config";
+import { dic } from "@/i18n/diccionarios";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -27,9 +30,11 @@ function conflictos(lugar: Lugar): Lugar[] {
   return [];
 }
 
-export default function Vitrina({ cat }: { cat: Categoria }) {
-  const piezas = todas[cat.slug];
-  const [look, setLook] = useState<Partial<Record<Lugar, Pieza>>>(() => cargar(outfits[cat.slug][0].piezas));
+export default function Vitrina({ lang, cat }: { lang: Lang; cat: Categoria }) {
+  const t = dic(lang);
+  const piezas = piezasDe(lang, cat.slug);
+  const outfits = outfitsDe(lang, cat.slug);
+  const [look, setLook] = useState<Partial<Record<Lugar, Pieza>>>(() => cargar(outfits[0].piezas));
   const [ocasion, setOcasion] = useState<Ocasion>("Oficina");
   const [panelMovil, setPanelMovil] = useState(false);
   const muro = useRef<HTMLDivElement>(null);
@@ -60,14 +65,14 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
   }
 
   const seleccion = useMemo(() => Object.values(look).filter(Boolean) as Pieza[], [look]);
-  const mensaje = `Hola Aura, armé este look en La Vitrina (${cat.label}): ${seleccion.map((p) => p.nombre).join(", ")}. ¿Me ayudan a crearlo con mi estilo?`;
+  const mensaje = t.wa.look(cat.label, seleccion.map((p) => p.nombre).join(", "));
 
   const panel = (
     <div className="flex flex-col items-center">
       <div className="w-full max-w-[260px] rounded-t-[999px] bg-papel p-4 pt-10 shadow-[inset_0_0_0_1px_var(--linea)]">
         <Maniqui seleccion={seleccion} />
       </div>
-      <p className="versalitas mt-6 text-oro">Tu look · {seleccion.length} piezas</p>
+      <p className="versalitas mt-6 text-oro">{t.vitrina.tuLook(seleccion.length)}</p>
       <ul className="mt-3 flex max-w-[300px] flex-wrap justify-center gap-1.5">
         {seleccion.map((p) => (
           <li key={p.id}>
@@ -75,7 +80,7 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
               type="button"
               onClick={() => alternar(p)}
               className="flex items-center gap-1.5 rounded-full border border-linea bg-papel px-3 py-1 text-[0.72rem] hover:border-lirio"
-              aria-label={`Quitar ${p.nombre}`}
+              aria-label={t.vitrina.quitar(p.nombre)}
             >
               <span className="h-2.5 w-2.5 rounded-full border border-tinta/20" style={{ background: p.color }} />
               {p.nombre} ×
@@ -92,14 +97,14 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
             seleccion.length === 0 ? "pointer-events-none opacity-40" : ""
           }`}
         >
-          <IconoWhatsApp className="h-4 w-4" /> Pedir este look
+          <IconoWhatsApp className="h-4 w-4" /> {t.vitrina.pedir}
         </a>
         <button
           type="button"
           onClick={() => setLook({})}
           className="rounded-full border border-tinta/25 px-5 py-3 text-[0.7rem] tracking-[0.16em] uppercase hover:border-tinta"
         >
-          Vaciar
+          {t.vitrina.vaciar}
         </button>
       </div>
     </div>
@@ -111,7 +116,7 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
       <section className="bg-papel">
         <div className="mx-auto max-w-[1440px] px-5 pb-12 md:px-10">
           <LayoutGroup>
-            <div className="flex flex-wrap justify-center gap-2" role="tablist" aria-label="Ocasiones">
+            <div className="flex flex-wrap justify-center gap-2" role="tablist" aria-label={t.vitrina.ocasionesAria}>
               {ocasiones.map((o) => (
                 <button
                   key={o}
@@ -124,14 +129,14 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
                   {o === ocasion && (
                     <motion.span layoutId="ocasion" className="absolute inset-0 rounded-full bg-laca" transition={{ duration: 0.5, ease }} />
                   )}
-                  <span className={`relative ${o === ocasion ? "text-papel" : ""}`}>{o}</span>
+                  <span className={`relative ${o === ocasion ? "text-papel" : ""}`}>{etiquetaOcasion[lang][o]}</span>
                 </button>
               ))}
             </div>
           </LayoutGroup>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             <AnimatePresence mode="popLayout">
-              {outfits[cat.slug]
+              {outfits
                 .filter((o) => o.ocasion === ocasion)
                 .map((o, i) => (
                   <motion.article
@@ -160,7 +165,7 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
                         }}
                         className="versalitas mt-3 text-oro hover:text-tinta"
                       >
-                        Probar en el maniquí →
+                        {t.vitrina.probar}
                       </button>
                     </div>
                   </motion.article>
@@ -200,7 +205,7 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
                 >
                   <div className="flex items-baseline justify-between px-6 pt-5">
                     <h3 className="titulo text-3xl italic">{f.nombre}</h3>
-                    <span className="versalitas text-[0.6rem] opacity-60">{delPiso.length} piezas</span>
+                    <span className="versalitas text-[0.6rem] opacity-60">{t.vitrina.piezas(delPiso.length)}</span>
                   </div>
                   <ul className="grid grid-cols-3 sm:grid-cols-4 xl:grid-cols-5">
                     {delPiso.map((p, i) => {
@@ -263,7 +268,7 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
         onClick={() => setPanelMovil(true)}
         className="fixed bottom-5 left-5 z-[55] flex items-center gap-2 rounded-full bg-laca px-5 py-4 text-[0.7rem] tracking-[0.16em] text-papel uppercase shadow-xl lg:hidden"
       >
-        Tu look · {seleccion.length}
+        {t.vitrina.tuLookCorto(seleccion.length)}
       </button>
       <AnimatePresence>
         {panelMovil && (
@@ -276,7 +281,7 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
           >
             <motion.div
               role="dialog"
-              aria-label="Tu look"
+              aria-label={t.vitrina.tuLookAria}
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
@@ -288,7 +293,7 @@ export default function Vitrina({ cat }: { cat: Categoria }) {
                 type="button"
                 onClick={() => setPanelMovil(false)}
                 className="mx-auto mb-4 block h-1.5 w-12 rounded-full bg-tinta/25"
-                aria-label="Cerrar"
+                aria-label={t.vitrina.cerrar}
               />
               {panel}
             </motion.div>

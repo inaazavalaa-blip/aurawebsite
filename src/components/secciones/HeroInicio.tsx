@@ -11,10 +11,13 @@ import { Destello, MarcoArco } from "@/components/ornamentos/Marcos";
 import PanDeOro from "@/components/three/PanDeOroLazy";
 import { BotonPrincipal, Flecha, IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Categoria } from "@/content/categorias";
+import { ruta, type Lang } from "@/i18n/config";
+import { dic } from "@/i18n/diccionarios";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export default function HeroInicio({ cat }: { cat: Categoria }) {
+export default function HeroInicio({ lang, cat }: { lang: Lang; cat: Categoria }) {
+  const t = dic(lang);
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yMarco = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
@@ -61,18 +64,18 @@ export default function HeroInicio({ cat }: { cat: Categoria }) {
             className="mt-10 flex flex-wrap items-center gap-4"
           >
             <BotonPrincipal
-              href={whatsappUrl(`Hola Aura, quiero empezar mi cambio de imagen (${cat.label}).`)}
+              href={whatsappUrl(t.wa.empezar(cat.label))}
               externo
               variante={mujer ? "laca" : "oro"}
             >
               <IconoWhatsApp className="h-4 w-4" />
-              Empieza tu cambio
+              {t.inicio.empezar}
             </BotonPrincipal>
             <Link
-              href={`/${cat.slug}/transformacion`}
+              href={ruta(lang, cat.slug, "transformacion")}
               className="group inline-flex items-center gap-3 border-b border-current/40 pb-1 text-[0.8rem] tracking-[0.14em] uppercase hover:border-current"
             >
-              Ver la transformación <Flecha />
+              {t.inicio.verTransformacion} <Flecha />
             </Link>
           </motion.div>
         </div>
