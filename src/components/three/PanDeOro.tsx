@@ -89,7 +89,13 @@ export default function PanDeOro({ cantidad = 90, className = "" }: { cantidad?:
 
   return (
     <div className={`pointer-events-none ${className}`} aria-hidden>
-      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 6], fov: 50 }} gl={{ alpha: true, antialias: true }}>
+      {/* El lienzo es solo decorativo: no debe capturar clics de lo que hay debajo. */}
+      <Canvas
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 0, 6], fov: 50 }}
+        gl={{ alpha: true, antialias: true }}
+        style={{ pointerEvents: "none" }}
+      >
         <ambientLight intensity={0.4} />
         <directionalLight position={[2, 3, 4]} intensity={1.4} color="#fff3d6" />
         <Hojuelas cantidad={cantidad} quieto={quieto} />
