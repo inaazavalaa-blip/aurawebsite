@@ -99,7 +99,6 @@ export const pasosProceso: Record<Lang, { numeral: string; titulo: string; texto
 };
 
 const precios = [
-  { usd: "$49 USD", mxn: "$990 MXN" },
   { usd: "$139 USD", mxn: "$2,790 MXN" },
   { usd: "$280 USD", mxn: "$5,500 MXN" },
 ];
@@ -107,26 +106,14 @@ const precios = [
 function paquetes(lang: Lang, hombre: boolean): Paquete[] {
   const es: Omit<Paquete, "usd" | "mxn">[] = [
     {
-      etiqueta: "Diagnóstico",
-      nombre: "Express de Color y Estilo",
-      corto: "Express",
-      descripcion:
-        "Tu puerta de entrada: descubre tus colores ideales y tu estilo personal con una experiencia totalmente digital. Cabello, rostro y armario se trabajan en Transformación y VIP.",
-      incluye: [
-        "Análisis de color online y estación",
-        hombre ? "Paleta digital para ropa, accesorios y grooming" : "Paleta digital para ropa, maquillaje y accesorios",
-        "Test y diagnóstico de estilo personal",
-        "PDF por correo en 48–72 horas",
-        "Su precio se descuenta si después eliges Transformación",
-      ],
-    },
-    {
       etiqueta: "Recomendada",
       nombre: "Transformación de Estilo",
       corto: "Transformación",
       descripcion: "Una transformación completa con acompañamiento y un manual de estilo hecho para ti.",
       incluye: [
-        "Todo lo del paquete Express",
+        "Análisis de color online y estación",
+        hombre ? "Paleta digital para ropa, accesorios y grooming" : "Paleta digital para ropa, maquillaje y accesorios",
+        "Test y diagnóstico de estilo personal",
         hombre ? "Análisis de rostro, barba y cabello" : "Análisis de rostro, cabello y silueta",
         "Sesión en vivo de 60 minutos",
         "Revisión de tu armario actual",
@@ -153,26 +140,14 @@ function paquetes(lang: Lang, hombre: boolean): Paquete[] {
   ];
   const en: Omit<Paquete, "usd" | "mxn">[] = [
     {
-      etiqueta: "Diagnosis",
-      nombre: "Express Colour & Style",
-      corto: "Express",
-      descripcion:
-        "Your way in: discover your ideal colours and personal style through a fully digital experience. Hair, face and wardrobe are covered in Transformation and VIP.",
-      incluye: [
-        "Online colour analysis and season",
-        hombre ? "Digital palette for clothing, accessories and grooming" : "Digital palette for clothing, makeup and accessories",
-        "Personal style test and diagnosis",
-        "PDF by email within 48–72 hours",
-        "Its price is deducted if you later choose Transformation",
-      ],
-    },
-    {
       etiqueta: "Recommended",
       nombre: "Style Transformation",
       corto: "Transformation",
       descripcion: "A complete transformation with personal guidance and a style manual made for you.",
       incluye: [
-        "Everything in the Express package",
+        "Online colour analysis and season",
+        hombre ? "Digital palette for clothing, accessories and grooming" : "Digital palette for clothing, makeup and accessories",
+        "Personal style test and diagnosis",
         hombre ? "Face, beard and hair analysis" : "Face, hair and silhouette analysis",
         "60-minute live session",
         "Review of your current wardrobe",

@@ -26,7 +26,7 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
       </section>
 
       <section className="bg-papel">
-        <div className={`${contenedor} grid gap-8 py-24 md:py-32 lg:grid-cols-3 lg:items-stretch`}>
+        <div className="mx-auto grid max-w-5xl gap-8 px-5 py-24 md:grid-cols-2 md:items-stretch md:px-10 md:py-32">
           {cat.paquetes.map((p, i) => (
             <Reveal key={p.nombre} delay={i * 120} className={p.destacado ? "lg:-mt-6" : ""}>
               <MarcoArco className="h-full">

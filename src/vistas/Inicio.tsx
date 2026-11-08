@@ -92,7 +92,7 @@ export default function Inicio({ lang, cat }: { lang: Lang; cat: Categoria }) {
               {t.serviciosTitulo} <em className="text-oro">{t.serviciosEnfasis}</em>
             </Encabezado>
           </Reveal>
-          <div className="mt-16 grid gap-6 md:grid-cols-3">
+          <div className="mx-auto mt-16 grid max-w-4xl gap-6 md:grid-cols-2">
             {cat.paquetes.map((p, i) => (
               <Reveal key={p.nombre} delay={i * 120}>
                 <Link
