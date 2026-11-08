@@ -45,6 +45,7 @@ const es = {
     agendar: (cat: string) => `Hola Aura, quiero agendar mi transformación (${cat}).`,
     paquete: (paquete: string, cat: string) =>
       `Hola Aura, me interesa el paquete "${paquete}" (${cat}). ¿Me dan más información?`,
+    extra: (extra: string, cat: string) => `Hola Aura, me interesa el extra "${extra}" (${cat}). ¿Me pasan el precio?`,
     reservar: (cat: string) => `Hola Aura, quiero reservar mi sesión (${cat}).`,
     look: (cat: string, piezas: string) =>
       `Hola Aura, armé este look en La Vitrina (${cat}): ${piezas}. ¿Me ayudan a crearlo con mi estilo?`,
@@ -147,15 +148,27 @@ const es = {
     compTitulo: "Todo lo que",
     compEnfasis: "incluye cada una.",
     comparativa: [
-      { rasgo: "Colorimetría y paleta personal", valores: ["✦", "✦", "✦"] },
-      { rasgo: "Diagnóstico de estilo", valores: ["✦", "✦", "✦"] },
-      { rasgo: "Análisis de rostro, cabello y silueta", valores: ["—", "✦", "✦"] },
+      { rasgo: "Colorimetría y paleta personal", valores: ["✓", "✓", "✓"] },
+      { rasgo: "Diagnóstico de estilo", valores: ["✓", "✓", "✓"] },
+      { rasgo: "Análisis de rostro, cabello y silueta", valores: ["—", "✓", "✓"] },
       { rasgo: "Sesiones en vivo", valores: ["—", "1", "2"] },
-      { rasgo: "Revisión de armario", valores: ["—", "✦", "En vivo"] },
+      { rasgo: "Revisión de armario", valores: ["—", "✓", "En vivo"] },
+      { rasgo: "Looks armados con tu propia ropa", valores: ["—", "3", "20+"] },
       { rasgo: "Dossier de imagen", valores: ["PDF", "20+ págs.", "20+ págs."] },
-      { rasgo: "Armario cápsula y ruta de compras", valores: ["—", "—", "✦"] },
+      { rasgo: "Armario cápsula y ruta de compras", valores: ["—", "—", "✓"] },
       { rasgo: "Acompañamiento por WhatsApp", valores: ["—", "14 días", "30 días"] },
     ] as { rasgo: string; valores: [string, string, string] }[],
+    extrasEyebrow: "Extras",
+    extrasTitulo: "Suma lo que",
+    extrasEnfasis: "necesites.",
+    extrasTexto: "Servicios que puedes pedir por separado o agregar a tu paquete. Te pasamos el precio por WhatsApp.",
+    extrasBoton: "Preguntar precio",
+    extras: [
+      { nombre: "Look para una ocasión", texto: "Una boda, una entrevista o un evento: armamos el look completo para ese día." },
+      { nombre: "Acompañamiento de compras", texto: "Una sesión de compras a tu lado para elegir solo lo que te favorece." },
+      { nombre: "Mantenimiento de temporada", texto: "Revisamos tu armario cada temporada para mantener tu imagen al día." },
+      { nombre: "Para dos o de regalo", texto: "Vive la experiencia en pareja o regálala con una tarjeta a alguien especial." },
+    ],
     faqEyebrow: "Preguntas frecuentes",
     faqTitulo: "Lo que",
     faqEnfasis: "nos suelen preguntar.",
@@ -163,12 +176,12 @@ const es = {
       {
         pregunta: "¿Las sesiones son en línea o presenciales?",
         respuesta:
-          "Trabajamos en línea en todo el país y también ofrecemos sesiones presenciales. Escríbenos por WhatsApp y te decimos qué opción se adapta mejor a ti.",
+          "Trabajamos en línea en todo el país y también ofrecemos sesiones presenciales. Los precios de esta página son para sesiones en línea; lo presencial se cotiza por WhatsApp según tu ubicación.",
       },
       {
         pregunta: "¿El cambio incluye cabello y rostro, o solo ropa?",
         respuesta:
-          "El cambio es total. Definimos el corte, el color, el maquillaje o grooming y la rutina que te favorecen, y te damos una guía exacta para tu estilista. Después lo llevamos a tu armario.",
+          "En Transformación y VIP el cambio es total: definimos el corte, el color, el maquillaje o grooming y la rutina que te favorecen, y te damos una guía exacta para tu estilista. Después lo llevamos a tu armario. Express se enfoca en color y estilo.",
       },
       {
         pregunta: "¿Cuánto tiempo tarda la transformación?",
@@ -177,7 +190,7 @@ const es = {
       },
       {
         pregunta: "¿Cómo se paga?",
-        respuesta: "Después de agendar te enviamos un enlace de pago seguro (Stripe o PayPal). Tu lugar queda confirmado con el pago.",
+        respuesta: "Después de agendar te enviamos un enlace de pago seguro (Stripe o PayPal). Tu lugar queda confirmado con el pago. En VIP pagas 50% al reservar y 50% al empezar el trabajo de armario.",
       },
       {
         pregunta: "¿Y si no sé qué paquete elegir?",
@@ -213,23 +226,11 @@ const es = {
         texto:
           "La escultura francesa de Rodin habla de cercanía. Así trabajamos: una asesoría íntima, a tu lado, sin juicios y con mucho cuidado.",
       },
-      flora: {
-        nombre: "El frasco amarillo",
-        origen: "Un jardín embotellado",
-        texto:
-          "Amarillo luminoso, tapa dorada y flores pintadas: la frescura que buscamos en cada look. Elegante, sí; solemne, nunca.",
-      },
       busto: {
         nombre: "El busto y las perlas",
         origen: "El detalle",
         texto:
           "Un collar bien elegido cambia un look entero. Cuidamos los accesorios, el escote y cada detalle que enmarca tu rostro.",
-      },
-      corazon: {
-        nombre: "El sagrado corazón",
-        origen: "La pasión",
-        texto:
-          "Hacemos esto con el corazón. Detrás de cada transformación hay una historia, y la tuya merece ser contada con orgullo.",
       },
     },
     besosEyebrow: "Dos besos",
@@ -324,6 +325,7 @@ const en: Diccionario = {
     agendar: (cat: string) => `Hello Aura, I'd like to book my transformation (${cat}).`,
     paquete: (paquete: string, cat: string) =>
       `Hello Aura, I'm interested in the "${paquete}" package (${cat}). Could you tell me more?`,
+    extra: (extra: string, cat: string) => `Hello Aura, I'm interested in the "${extra}" extra (${cat}). Could you share the price?`,
     reservar: (cat: string) => `Hello Aura, I'd like to book my session (${cat}).`,
     look: (cat: string, piezas: string) =>
       `Hello Aura, I put together this look in The Showcase (${cat}): ${piezas}. Could you help me create it in my own style?`,
@@ -426,14 +428,26 @@ const en: Diccionario = {
     compTitulo: "Everything",
     compEnfasis: "each one includes.",
     comparativa: [
-      { rasgo: "Colour analysis and personal palette", valores: ["✦", "✦", "✦"] },
-      { rasgo: "Style diagnosis", valores: ["✦", "✦", "✦"] },
-      { rasgo: "Face, hair and silhouette analysis", valores: ["—", "✦", "✦"] },
+      { rasgo: "Colour analysis and personal palette", valores: ["✓", "✓", "✓"] },
+      { rasgo: "Style diagnosis", valores: ["✓", "✓", "✓"] },
+      { rasgo: "Face, hair and silhouette analysis", valores: ["—", "✓", "✓"] },
       { rasgo: "Live sessions", valores: ["—", "1", "2"] },
-      { rasgo: "Wardrobe review", valores: ["—", "✦", "Live"] },
+      { rasgo: "Wardrobe review", valores: ["—", "✓", "Live"] },
+      { rasgo: "Looks from your own clothes", valores: ["—", "3", "20+"] },
       { rasgo: "Image dossier", valores: ["PDF", "20+ pages", "20+ pages"] },
-      { rasgo: "Capsule wardrobe and shopping route", valores: ["—", "—", "✦"] },
+      { rasgo: "Capsule wardrobe and shopping route", valores: ["—", "—", "✓"] },
       { rasgo: "WhatsApp support", valores: ["—", "14 days", "30 days"] },
+    ],
+    extrasEyebrow: "Extras",
+    extrasTitulo: "Add what",
+    extrasEnfasis: "you need.",
+    extrasTexto: "Services you can request on their own or add to your package. We'll share the price on WhatsApp.",
+    extrasBoton: "Ask for the price",
+    extras: [
+      { nombre: "A look for an occasion", texto: "A wedding, an interview or an event: we put together the complete look for that day." },
+      { nombre: "Personal shopping", texto: "A shopping session by your side to choose only what flatters you." },
+      { nombre: "Seasonal upkeep", texto: "We review your wardrobe each season to keep your image up to date." },
+      { nombre: "For two or as a gift", texto: "Enjoy the experience as a couple, or give it to someone special with a gift card." },
     ],
     faqEyebrow: "Frequently asked questions",
     faqTitulo: "What people",
@@ -442,12 +456,12 @@ const en: Diccionario = {
       {
         pregunta: "Are sessions online or in person?",
         respuesta:
-          "We work online across the country and also offer in-person sessions. Message us on WhatsApp and we'll tell you which option suits you best.",
+          "We work online across the country and also offer in-person sessions. The prices on this page are for online sessions; in-person sessions are quoted on WhatsApp based on your location.",
       },
       {
         pregunta: "Does the change include hair and face, or just clothes?",
         respuesta:
-          "The change is total. We define the cut, colour, makeup or grooming and routine that suit you, and give you an exact guide for your stylist. Then we carry it into your wardrobe.",
+          "In Transformation and VIP the change is total: we define the cut, colour, makeup or grooming and routine that suit you, and give you an exact guide for your stylist. Then we carry it into your wardrobe. Express focuses on colour and style.",
       },
       {
         pregunta: "How long does the transformation take?",
@@ -456,7 +470,7 @@ const en: Diccionario = {
       },
       {
         pregunta: "How do I pay?",
-        respuesta: "Once you've booked, we send you a secure payment link (Stripe or PayPal). Your spot is confirmed with payment.",
+        respuesta: "Once you've booked, we send you a secure payment link (Stripe or PayPal). Your spot is confirmed with payment. For VIP, you pay 50% when booking and 50% when the wardrobe work begins.",
       },
       {
         pregunta: "What if I don't know which package to choose?",
@@ -492,23 +506,11 @@ const en: Diccionario = {
         texto:
           "Rodin's French sculpture speaks of closeness. That's how we work: an intimate consultation, by your side, without judgement and with great care.",
       },
-      flora: {
-        nombre: "The yellow bottle",
-        origen: "A bottled garden",
-        texto:
-          "Luminous yellow, a golden cap and painted flowers: the freshness we look for in every outfit. Elegant, yes; solemn, never.",
-      },
       busto: {
         nombre: "The bust and the pearls",
         origen: "The detail",
         texto:
           "A well-chosen necklace changes a whole look. We take care of accessories, necklines and every detail that frames your face.",
-      },
-      corazon: {
-        nombre: "The sacred heart",
-        origen: "Passion",
-        texto:
-          "We do this with heart. Behind every transformation there's a story, and yours deserves to be told with pride.",
       },
     },
     besosEyebrow: "Two kisses",

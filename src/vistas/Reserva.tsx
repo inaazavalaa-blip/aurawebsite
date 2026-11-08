@@ -1,8 +1,5 @@
 import FormularioReserva from "@/components/FormularioReserva";
 import Reveal from "@/components/Reveal";
-import { Guirnalda } from "@/components/ornamentos/Botanica";
-import { SagradoCorazon } from "@/components/ornamentos/Curiosidades";
-import { Destello } from "@/components/ornamentos/Marcos";
 import { contenedor } from "@/components/secciones/Comunes";
 import { IconoWhatsApp } from "@/components/ui";
 import { enlaces, whatsappUrl, type Categoria } from "@/content/categorias";
@@ -16,17 +13,12 @@ export default function Reserva({ lang, cat }: { lang: Lang; cat: Categoria }) {
   return (
     <>
       <section className="bg-hero text-hero-fg">
-        <div className={`${contenedor} grid items-center gap-10 py-16 md:grid-cols-[1.6fr_1fr] md:py-24`}>
+        <div className={`${contenedor} py-16 md:py-24`}>
           <Reveal>
-            <p className="versalitas flex items-center gap-3">
-              <Destello className="h-3 w-3" /> {t.eyebrow}
-            </p>
+            <p className="versalitas">{t.eyebrow}</p>
             <h1 className="titulo mt-6 text-[clamp(3rem,7vw,6.2rem)]">
               {t.titulo} <em className={cat.slug === "mujer" ? "" : "texto-dorado"}>{t.enfasis}</em>
             </h1>
-          </Reveal>
-          <Reveal delay={150} className="mx-auto w-32 md:w-44">
-            <SagradoCorazon className="w-full" />
           </Reveal>
         </div>
       </section>
@@ -67,7 +59,6 @@ export default function Reserva({ lang, cat }: { lang: Lang; cat: Categoria }) {
             <FormularioReserva lang={lang} cat={cat} />
           </Reveal>
         </div>
-        <Guirnalda className="h-12 w-full" />
       </section>
     </>
   );

@@ -7,6 +7,8 @@ export type Imagen = { src: string; alt: string };
 export type Paquete = {
   etiqueta: string;
   nombre: string;
+  /** Nombre corto para las columnas de la tabla comparativa. */
+  corto: string;
   descripcion: string;
   usd: string;
   mxn: string;
@@ -64,7 +66,7 @@ const fotos = {
   mujerHero: unsplash("1743660606584-a08c89003d13", 1100),
   mujerCabello: unsplash("1580618672591-eb180b1a973f", 900),
   mujerRostro: unsplash("1636023730877-233b9237d4ec", 900),
-  hombreChoix: unsplash("1676377630356-d8e7acd02ead", 900),
+  hombreChoix: "/images/hombre-choix.jpg",
   hombreHero: unsplash("1676278746061-c5bac5b34ae5", 1100),
   hombreCabello: unsplash("1599011176306-4a96f1516d4d", 900),
   hombreRostro: unsplash("1503951914875-452162b0f3f1", 900),
@@ -107,23 +109,28 @@ function paquetes(lang: Lang, hombre: boolean): Paquete[] {
     {
       etiqueta: "Diagnóstico",
       nombre: "Express de Color y Estilo",
-      descripcion: "Descubre tus colores ideales y tu estilo personal con una experiencia totalmente digital.",
+      corto: "Express",
+      descripcion:
+        "Tu puerta de entrada: descubre tus colores ideales y tu estilo personal con una experiencia totalmente digital. Cabello, rostro y armario se trabajan en Transformación y VIP.",
       incluye: [
         "Análisis de color online y estación",
         hombre ? "Paleta digital para ropa, accesorios y grooming" : "Paleta digital para ropa, maquillaje y accesorios",
         "Test y diagnóstico de estilo personal",
         "PDF por correo en 48–72 horas",
+        "Su precio se descuenta si después eliges Transformación",
       ],
     },
     {
-      etiqueta: "La más elegida",
+      etiqueta: "Recomendada",
       nombre: "Transformación de Estilo",
+      corto: "Transformación",
       descripcion: "Una transformación completa con acompañamiento y un manual de estilo hecho para ti.",
       incluye: [
         "Todo lo del paquete Express",
         hombre ? "Análisis de rostro, barba y cabello" : "Análisis de rostro, cabello y silueta",
         "Sesión en vivo de 60 minutos",
         "Revisión de tu armario actual",
+        "3 looks armados con tu propia ropa",
         "Dossier de imagen de más de 20 páginas",
         "14 días de acompañamiento por WhatsApp",
       ],
@@ -132,6 +139,7 @@ function paquetes(lang: Lang, hombre: boolean): Paquete[] {
     {
       etiqueta: "Experiencia total",
       nombre: "VIP · Armario Cápsula",
+      corto: "VIP",
       descripcion: "La renovación completa: imagen, armario y un catálogo de compras a tu medida.",
       incluye: [
         "Todo lo del paquete Transformación",
@@ -147,23 +155,28 @@ function paquetes(lang: Lang, hombre: boolean): Paquete[] {
     {
       etiqueta: "Diagnosis",
       nombre: "Express Colour & Style",
-      descripcion: "Discover your ideal colours and personal style through a fully digital experience.",
+      corto: "Express",
+      descripcion:
+        "Your way in: discover your ideal colours and personal style through a fully digital experience. Hair, face and wardrobe are covered in Transformation and VIP.",
       incluye: [
         "Online colour analysis and season",
         hombre ? "Digital palette for clothing, accessories and grooming" : "Digital palette for clothing, makeup and accessories",
         "Personal style test and diagnosis",
         "PDF by email within 48–72 hours",
+        "Its price is deducted if you later choose Transformation",
       ],
     },
     {
-      etiqueta: "Most popular",
+      etiqueta: "Recommended",
       nombre: "Style Transformation",
+      corto: "Transformation",
       descripcion: "A complete transformation with personal guidance and a style manual made for you.",
       incluye: [
         "Everything in the Express package",
         hombre ? "Face, beard and hair analysis" : "Face, hair and silhouette analysis",
         "60-minute live session",
         "Review of your current wardrobe",
+        "3 looks put together from your own clothes",
         "Image dossier of 20+ pages",
         "14 days of WhatsApp support",
       ],
@@ -172,6 +185,7 @@ function paquetes(lang: Lang, hombre: boolean): Paquete[] {
     {
       etiqueta: "The full experience",
       nombre: "VIP · Capsule Wardrobe",
+      corto: "VIP",
       descripcion: "The complete renewal: image, wardrobe and a shopping guide tailored to you.",
       incluye: [
         "Everything in the Transformation package",
@@ -341,7 +355,7 @@ const hombreEs: Categoria = {
   label: "Hombre",
   choix: {
     caption: "Sobrio, seguro, con carácter",
-    imagen: { src: fotos.hombreChoix, alt: "Hombre con traje ajustándose la corbata" },
+    imagen: { src: fotos.hombreChoix, alt: "Hombre con traje y gafas abotonándose el saco" },
   },
   hero: {
     eyebrow: "Maison de imagen integral",
@@ -421,7 +435,7 @@ const hombreEn: Categoria = {
   label: "Men",
   choix: {
     caption: "Sober, confident, with character",
-    imagen: { src: fotos.hombreChoix, alt: "Man in a suit adjusting his tie" },
+    imagen: { src: fotos.hombreChoix, alt: "Man in a suit with glasses buttoning his jacket" },
   },
   hero: {
     eyebrow: "Full image maison",

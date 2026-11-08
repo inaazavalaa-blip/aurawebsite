@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Guirnalda } from "@/components/ornamentos/Botanica";
-import { BesoRodin, Busto, Camafeo, FrascoPerfume, SagradoCorazon } from "@/components/ornamentos/Curiosidades";
+import { BesoRodin, Busto } from "@/components/ornamentos/Curiosidades";
 import { EspejoCuadrilobulo, EspejoSol } from "@/components/ornamentos/Marcos";
 import { imagenes } from "@/content/categorias";
 import type { Lang } from "@/i18n/config";
@@ -24,12 +23,10 @@ const dibujos: Record<ObjetoId, ReactNode> = {
     </EspejoCuadrilobulo>
   ),
   rodin: <BesoRodin className="w-full" />,
-  flora: <FrascoPerfume className="mx-auto w-[70%]" />,
   busto: <Busto className="mx-auto w-[80%]" />,
-  corazon: <SagradoCorazon className="mx-auto w-[80%]" />,
 };
 
-const orden: ObjetoId[] = ["versalles", "klimt", "rodin", "flora", "busto", "corazon"];
+const orden: ObjetoId[] = ["versalles", "klimt", "rodin", "busto"];
 
 /** Gabinete de curiosidades: las inspiraciones de la marca, como un escaparate de anticuario. */
 export default function Gabinete({ lang }: { lang: Lang }) {
@@ -41,8 +38,7 @@ export default function Gabinete({ lang }: { lang: Lang }) {
   return (
     <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
       <div className="relative overflow-hidden rounded-t-[999px] bg-laca px-5 pb-6 pt-24 shadow-[inset_0_0_0_6px_#b8892e,inset_0_0_0_10px_#141210,inset_0_0_0_12px_#d9b45a]">
-        <Guirnalda className="absolute inset-x-0 top-14 h-10 w-full opacity-90" />
-        <div className="grid grid-cols-3 gap-x-4">
+        <div className="mx-auto grid max-w-md grid-cols-2 gap-x-4">
           {objetos.map((o) => (
             <button
               key={o.id}
@@ -65,7 +61,6 @@ export default function Gabinete({ lang }: { lang: Lang }) {
             </button>
           ))}
         </div>
-        <Camafeo className="mx-auto mt-6 w-10 opacity-80" />
       </div>
 
       <AnimatePresence mode="wait">

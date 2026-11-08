@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { Guirnalda } from "@/components/ornamentos/Botanica";
 import { Busto } from "@/components/ornamentos/Curiosidades";
 import { FondoKlimt } from "@/components/ornamentos/Klimt";
-import { Destello, EspejoSol } from "@/components/ornamentos/Marcos";
+import { EspejoSol } from "@/components/ornamentos/Marcos";
 import PiezaIcono from "@/components/vitrina/PiezaIcono";
 import { BotonPrincipal, Encabezado, Flecha, IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Area, type Categoria } from "@/content/categorias";
@@ -22,9 +21,8 @@ export function Marquesina({ palabras, tono = "laca" }: { palabras: string[]; to
     >
       <div className="marquesina flex w-max items-center" aria-hidden>
         {[...fila, ...fila].map((p, i) => (
-          <span key={i} className="flex items-center">
-            <span className="titulo px-8 text-[clamp(1.6rem,3vw,2.6rem)] italic">{p}</span>
-            <Destello className="h-4 w-4" />
+          <span key={i} className="titulo px-8 text-[clamp(1.6rem,3vw,2.6rem)] italic">
+            {p}
           </span>
         ))}
       </div>
@@ -104,8 +102,7 @@ export function CitaKlimt({ lang }: { lang: Lang }) {
     <section className="relative overflow-hidden bg-laca py-28 text-papel md:py-36">
       <FondoKlimt variante="espirales" opacidad={0.35} />
       <Reveal className="relative mx-auto max-w-4xl px-5 text-center">
-        <Destello className="mx-auto h-6 w-6" />
-        <blockquote className="titulo mt-8 text-[clamp(2rem,4.4vw,3.8rem)] italic leading-tight">
+        <blockquote className="titulo text-[clamp(2rem,4.4vw,3.8rem)] italic leading-tight">
           {t.cita}
         </blockquote>
         <p className="versalitas mt-8 text-pan">{t.citaAutor}</p>
@@ -118,7 +115,6 @@ export function LlamadoFinal({ lang, cat }: { lang: Lang; cat: Categoria }) {
   const t = dic(lang);
   return (
     <section className="relative overflow-hidden bg-flora">
-      <Guirnalda className="h-14 w-full" />
       <div className={`${contenedor} grid gap-10 py-20 md:grid-cols-[1.4fr_1fr] md:items-center md:py-28`}>
         <Reveal>
           <h2 className="titulo text-[clamp(2.6rem,6vw,5.4rem)]">
@@ -139,7 +135,6 @@ export function LlamadoFinal({ lang, cat }: { lang: Lang; cat: Categoria }) {
           </Link>
         </Reveal>
       </div>
-      <Guirnalda className="h-14 w-full rotate-180" />
     </section>
   );
 }

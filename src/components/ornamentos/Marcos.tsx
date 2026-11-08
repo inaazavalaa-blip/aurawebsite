@@ -1,13 +1,12 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { MarcoTipo } from "@/content/categorias";
 
-type Props = { children?: ReactNode; className?: string; cresta?: boolean };
+type Props = { children?: ReactNode; className?: string };
 
 /** Arco con doble filete dorado y negro, como la etiqueta de un frasco de perfume. */
-export function MarcoArco({ children, className = "", cresta = false }: Props) {
+export function MarcoArco({ children, className = "" }: Props) {
   return (
     <div className={`relative ${className}`}>
-      {cresta && <Cresta className="absolute -top-[9%] left-1/2 z-10 w-[30%] -translate-x-1/2" />}
       <div className="dorado grid h-full rounded-t-[999px] p-[3.2%] shadow-[0_30px_60px_-30px_rgb(20_18_16/0.55)]">
         <div className="grid rounded-t-[999px] bg-laca p-[1.6%]">
           <div className="dorado grid rounded-t-[999px] p-[0.8%]">
@@ -97,44 +96,4 @@ export function Marco({ tipo, ...props }: Props & { tipo: MarcoTipo }) {
   if (tipo === "sol") return <EspejoSol {...props} />;
   if (tipo === "cuadrilobulo") return <EspejoCuadrilobulo {...props} />;
   return <MarcoArco {...props} />;
-}
-
-/** Concha/corona barroca que remata los arcos. */
-export function Cresta({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 120 70" className={className} aria-hidden>
-      <defs>
-        <linearGradient id="oro-cresta" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#8a6420" />
-          <stop offset="0.45" stopColor="#f3dc95" />
-          <stop offset="1" stopColor="#8a6420" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M60 66 C40 66 22 58 14 44 C24 46 30 42 30 36 C20 36 12 28 14 18 C22 24 30 24 34 18 C30 10 36 2 46 4 C46 12 52 16 60 16 C68 16 74 12 74 4 C84 2 90 10 86 18 C90 24 98 24 106 18 C108 28 100 36 90 36 C90 42 96 46 106 44 C98 58 80 66 60 66 Z"
-        fill="url(#oro-cresta)"
-      />
-      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-        <path
-          key={i}
-          d={`M60 62 L${36 + i * 8} 26`}
-          stroke="#7a5718"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          opacity="0.6"
-        />
-      ))}
-      <circle cx="60" cy="62" r="5" fill="#141210" />
-      <circle cx="60" cy="62" r="3" fill="#d9506b" />
-    </svg>
-  );
-}
-
-/** Destello de cuatro puntas. */
-export function Destello({ className = "", color = "#d9b45a" }: { className?: string; color?: string }) {
-  return (
-    <svg viewBox="0 0 40 40" className={className} aria-hidden>
-      <path d="M20 0 C22 14 26 18 40 20 C26 22 22 26 20 40 C18 26 14 22 0 20 C14 18 18 14 20 0 Z" fill={color} />
-    </svg>
-  );
 }

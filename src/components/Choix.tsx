@@ -3,9 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { Ramo } from "@/components/ornamentos/Botanica";
 import { FondoKlimt } from "@/components/ornamentos/Klimt";
-import { Destello, EspejoSol, MarcoArco } from "@/components/ornamentos/Marcos";
+import { EspejoSol, MarcoArco } from "@/components/ornamentos/Marcos";
 import PanDeOro from "@/components/three/PanDeOroLazy";
 import { Flecha } from "@/components/ui";
 import { SwitchIdioma } from "@/components/Cabecera";
@@ -32,11 +31,7 @@ export default function Choix({ lang }: { lang: Lang }) {
             href={ruta(lang, slug)}
             className={`group relative flex min-h-[50svh] flex-1 items-center justify-center overflow-hidden px-6 py-14 outline-none md:min-h-svh ${estilo}`}
           >
-            {slug === "mujer" ? (
-              <Ramo className="pointer-events-none absolute -bottom-10 -left-16 h-[70%] opacity-90 md:h-[85%]" />
-            ) : (
-              <FondoKlimt variante="mosaico" opacidad={0.07} />
-            )}
+            {slug === "hombre" && <FondoKlimt variante="mosaico" opacidad={0.07} />}
 
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -85,9 +80,7 @@ export default function Choix({ lang }: { lang: Lang }) {
       <SwitchIdioma lang={lang} className="absolute right-4 top-4 z-40 bg-papel/90 text-tinta md:right-6 md:top-6" />
 
       <p className="pointer-events-none absolute inset-x-0 bottom-8 z-30 hidden items-center justify-center gap-4 text-center md:flex">
-        <Destello className="h-3 w-3" />
         <span className="titulo rounded-full bg-papel/90 px-6 py-2 text-lg italic text-tinta">{t.pregunta}</span>
-        <Destello className="h-3 w-3" />
       </p>
     </main>
   );

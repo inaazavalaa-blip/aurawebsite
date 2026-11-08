@@ -1,5 +1,4 @@
 import Reveal from "@/components/Reveal";
-import { Guirnalda } from "@/components/ornamentos/Botanica";
 import { Encabezado } from "@/components/ui";
 import VitrinaInteractiva from "@/components/vitrina/Vitrina";
 import { LlamadoFinal } from "@/components/secciones/Comunes";
@@ -12,7 +11,6 @@ export default function Vitrina({ lang, cat }: { lang: Lang; cat: Categoria }) {
   return (
     <>
       <section className="bg-papel">
-        <Guirnalda className="h-12 w-full" />
         <Reveal className="mx-auto max-w-3xl px-5 pb-12 pt-14 text-center">
           <Encabezado eyebrow={t.eyebrow} centrado>
             {t.titulo} <em className="text-oro">{t.enfasis}</em>

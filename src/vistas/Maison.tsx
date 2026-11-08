@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Gabinete from "@/components/Gabinete";
 import Reveal from "@/components/Reveal";
-import { Ramo } from "@/components/ornamentos/Botanica";
 import { BesoRodin } from "@/components/ornamentos/Curiosidades";
 import { FondoKlimt } from "@/components/ornamentos/Klimt";
-import { Destello, MarcoArco } from "@/components/ornamentos/Marcos";
+import { MarcoArco } from "@/components/ornamentos/Marcos";
 import { CitaKlimt, contenedor, LlamadoFinal } from "@/components/secciones/Comunes";
 import { Encabezado } from "@/components/ui";
 import { imagenes, type Categoria } from "@/content/categorias";
@@ -20,15 +19,12 @@ export default function Maison({ lang, cat }: { lang: Lang; cat: Categoria }) {
       <section className="relative overflow-hidden bg-papel">
         <div className={`${contenedor} grid items-center gap-14 py-16 md:py-24 lg:grid-cols-[1fr_1.1fr]`}>
           <Reveal className="relative mx-auto w-full max-w-[440px]">
-            <MarcoArco cresta className="aspect-[3/4]">
+            <MarcoArco className="aspect-[3/4]">
               <Image src={img.versalles.src} alt={img.versalles.alt} fill priority sizes="440px" className="object-cover" />
             </MarcoArco>
-            <Ramo className="pointer-events-none absolute -bottom-10 -left-14 w-[40%]" />
           </Reveal>
           <Reveal delay={150}>
-            <p className="versalitas flex items-center gap-3 text-oro">
-              <Destello className="h-3 w-3" /> {t.eyebrow}
-            </p>
+            <p className="versalitas text-oro">{t.eyebrow}</p>
             <h1 className="titulo mt-6 text-[clamp(3rem,6.6vw,6rem)]">
               {t.titulo} <em className="text-oro">{t.enfasis}</em>
             </h1>

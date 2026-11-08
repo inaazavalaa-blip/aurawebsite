@@ -4,7 +4,6 @@ import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, useScroll, useTransform } from "motion/react";
 import Maniqui from "@/components/vitrina/Maniqui";
 import PiezaIcono from "@/components/vitrina/PiezaIcono";
-import { Destello } from "@/components/ornamentos/Marcos";
 import { IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Categoria } from "@/content/categorias";
 import {
@@ -234,14 +233,9 @@ export default function Vitrina({ lang, cat }: { lang: Lang; cat: Categoria }) {
                                 className="max-h-24 max-w-[78%] transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-110"
                               />
                               {activa && (
-                                <motion.span
-                                  layoutId={`marca-${p.id}`}
-                                  className="absolute right-1 top-0"
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                >
-                                  <Destello className="h-4 w-4" />
-                                </motion.span>
+                                <span className="absolute right-1 top-0 text-sm font-medium" aria-hidden>
+                                  ✓
+                                </span>
                               )}
                             </span>
                             <span className="text-center text-[0.72rem] leading-tight">{p.nombre}</span>

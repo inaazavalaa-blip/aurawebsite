@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Destello } from "@/components/ornamentos/Marcos";
 
 export function Logo({ className = "", claro = false }: { className?: string; claro?: boolean }) {
   return (
@@ -33,7 +32,7 @@ export function IconoWhatsApp({ className = "" }: { className?: string }) {
   );
 }
 
-/** Encabezado de sección: versalitas con destello + título en Bodoni. */
+/** Encabezado de sección: versalitas + título en Bodoni. */
 export function Encabezado({
   eyebrow,
   children,
@@ -47,11 +46,7 @@ export function Encabezado({
 }) {
   return (
     <div className={`${centrado ? "mx-auto text-center" : ""} ${className}`}>
-      <p className={`versalitas flex items-center gap-3 text-oro ${centrado ? "justify-center" : ""}`}>
-        <Destello className="h-3 w-3" />
-        {eyebrow}
-        <Destello className="h-3 w-3" />
-      </p>
+      <p className="versalitas text-oro">{eyebrow}</p>
       <h2 className="titulo mt-5 text-[clamp(2.4rem,5vw,4.6rem)]">{children}</h2>
     </div>
   );

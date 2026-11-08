@@ -1,7 +1,7 @@
 import Link from "next/link";
 import AntesDespues from "@/components/AntesDespues";
 import Reveal from "@/components/Reveal";
-import { Cresta, Destello, EspejoCuadrilobulo } from "@/components/ornamentos/Marcos";
+import { EspejoCuadrilobulo } from "@/components/ornamentos/Marcos";
 import HeroInicio from "@/components/secciones/HeroInicio";
 import { CitaKlimt, contenedor, LlamadoFinal, Marquesina, Medallones } from "@/components/secciones/Comunes";
 import PiezaIcono from "@/components/vitrina/PiezaIcono";
@@ -101,7 +101,6 @@ export default function Inicio({ lang, cat }: { lang: Lang; cat: Categoria }) {
                     p.destacado ? "border-oro bg-laca text-papel" : "border-oro/50 bg-papel"
                   }`}
                 >
-                  <Cresta className="absolute -top-6 w-20" />
                   <p className="versalitas text-[0.6rem] text-oro">{p.etiqueta}</p>
                   <h3 className="titulo mt-4 text-3xl">{p.nombre}</h3>
                   <p className={`mt-4 text-[0.9rem] leading-relaxed ${p.destacado ? "text-papel/75" : "text-suave"}`}>
@@ -116,9 +115,7 @@ export default function Inicio({ lang, cat }: { lang: Lang; cat: Categoria }) {
               </Reveal>
             ))}
           </div>
-          <p className="mt-10 flex items-center justify-center gap-3 text-center text-[0.85rem] text-suave">
-            <Destello className="h-3 w-3" /> {t.serviciosNota}
-          </p>
+          <p className="mt-10 text-center text-[0.85rem] text-suave">{t.serviciosNota}</p>
         </div>
       </section>
 

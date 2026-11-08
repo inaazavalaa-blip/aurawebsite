@@ -4,10 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { Ramo } from "@/components/ornamentos/Botanica";
-import { SagradoCorazon } from "@/components/ornamentos/Curiosidades";
 import { FondoKlimt } from "@/components/ornamentos/Klimt";
-import { Destello, MarcoArco } from "@/components/ornamentos/Marcos";
+import { MarcoArco } from "@/components/ornamentos/Marcos";
 import PanDeOro from "@/components/three/PanDeOroLazy";
 import { BotonPrincipal, Flecha, IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Categoria } from "@/content/categorias";
@@ -21,7 +19,6 @@ export default function HeroInicio({ lang, cat }: { lang: Lang; cat: Categoria }
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yMarco = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const yRamo = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
   const mujer = cat.slug === "mujer";
 
   return (
@@ -35,9 +32,8 @@ export default function HeroInicio({ lang, cat }: { lang: Lang; cat: Categoria }
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease, delay: 0.5 }}
-            className="versalitas flex items-center gap-3"
+            className="versalitas"
           >
-            <Destello className="h-3 w-3" color={mujer ? "#1d1a16" : "#d9b45a"} />
             {cat.hero.eyebrow}
           </motion.p>
           <motion.h1
@@ -81,24 +77,13 @@ export default function HeroInicio({ lang, cat }: { lang: Lang; cat: Categoria }
         </div>
 
         <div className="relative mx-auto w-full max-w-[460px]">
-          <motion.div style={{ y: yRamo }} className="pointer-events-none absolute -bottom-16 -left-20 z-20 w-[48%]">
-            <Ramo className="w-full" />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.6, rotate: -12 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1.2, ease, delay: 1.1 }}
-            className="absolute -right-6 top-10 z-20 w-24 md:-right-12 md:w-32"
-          >
-            <SagradoCorazon className="w-full drop-shadow-[0_10px_20px_rgb(20_18_16/0.3)]" />
-          </motion.div>
           <motion.div
             style={{ y: yMarco }}
             initial={{ clipPath: "inset(100% 0 0 0)" }}
             animate={{ clipPath: "inset(-15% -10% -10% -10%)" }}
             transition={{ duration: 1.5, ease, delay: 0.5 }}
           >
-            <MarcoArco cresta className="aspect-[3/4] w-full">
+            <MarcoArco className="aspect-[3/4] w-full">
               <Image
                 src={cat.hero.imagen.src}
                 alt={cat.hero.imagen.alt}

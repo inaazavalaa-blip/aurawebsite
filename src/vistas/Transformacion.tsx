@@ -1,9 +1,8 @@
 import Image from "next/image";
 import AntesDespues from "@/components/AntesDespues";
 import Reveal from "@/components/Reveal";
-import { Ramo } from "@/components/ornamentos/Botanica";
 import { FondoKlimt } from "@/components/ornamentos/Klimt";
-import { Destello, EspejoCuadrilobulo, EspejoSol, Marco } from "@/components/ornamentos/Marcos";
+import { EspejoCuadrilobulo, EspejoSol, Marco } from "@/components/ornamentos/Marcos";
 import { contenedor, IlustracionArea, LlamadoFinal, Marquesina } from "@/components/secciones/Comunes";
 import Maniqui from "@/components/vitrina/Maniqui";
 import PiezaIcono from "@/components/vitrina/PiezaIcono";
@@ -25,16 +24,13 @@ export default function Transformacion({ lang, cat }: { lang: Lang; cat: Categor
         {!mujer && <FondoKlimt variante="mosaico" opacidad={0.07} />}
         <div className={`${contenedor} relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1.1fr_1fr]`}>
           <Reveal>
-            <p className="versalitas flex items-center gap-3">
-              <Destello className="h-3 w-3" /> {t.eyebrow}
-            </p>
+            <p className="versalitas">{t.eyebrow}</p>
             <h1 className="titulo mt-6 text-[clamp(3rem,7vw,6.4rem)]">
               {t.titulo} <em className={mujer ? "" : "texto-dorado"}>{t.enfasis}</em>
             </h1>
             <p className="mt-8 max-w-lg text-[1.02rem] leading-[1.8] opacity-85">{t.texto}</p>
           </Reveal>
           <Reveal delay={150} className="relative mx-auto w-full max-w-[460px]">
-            {mujer && <Ramo className="pointer-events-none absolute -bottom-10 -right-12 z-10 w-[42%]" />}
             <EspejoCuadrilobulo>
               <Image src={cat.choix.imagen.src} alt={cat.choix.imagen.alt} fill priority sizes="460px" className="object-cover" />
             </EspejoCuadrilobulo>
@@ -49,7 +45,7 @@ export default function Transformacion({ lang, cat }: { lang: Lang; cat: Categor
         <section key={area.id} id={area.id} className={`scroll-mt-20 ${i % 2 ? "bg-papel-2" : "bg-papel"}`}>
           <div className={`${contenedor} grid items-center gap-12 py-20 md:py-28 lg:grid-cols-2 lg:gap-20`}>
             <Reveal className={`mx-auto w-full max-w-[440px] ${i % 2 ? "lg:order-2" : ""}`}>
-              <Marco tipo={area.marco} cresta={area.marco === "arco"} className={area.marco === "arco" ? "aspect-[4/5]" : ""}>
+              <Marco tipo={area.marco} className={area.marco === "arco" ? "aspect-[4/5]" : ""}>
                 <IlustracionArea area={area} cat={cat} />
               </Marco>
             </Reveal>
@@ -61,7 +57,9 @@ export default function Transformacion({ lang, cat }: { lang: Lang; cat: Categor
               <ul className="mt-8 grid gap-3 border-t border-linea pt-6">
                 {area.trabajamos.map((item) => (
                   <li key={item} className="flex items-center gap-3">
-                    <Destello className="h-3 w-3 shrink-0" />
+                    <span className="shrink-0 text-oro" aria-hidden>
+                      ✓
+                    </span>
                     {item}
                   </li>
                 ))}

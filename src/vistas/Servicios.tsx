@@ -1,8 +1,6 @@
 import Acordeon from "@/components/Acordeon";
 import Reveal from "@/components/Reveal";
-import { Guirnalda } from "@/components/ornamentos/Botanica";
-import { FrascoPerfume } from "@/components/ornamentos/Curiosidades";
-import { Destello, MarcoArco } from "@/components/ornamentos/Marcos";
+import { MarcoArco } from "@/components/ornamentos/Marcos";
 import { contenedor, LlamadoFinal } from "@/components/secciones/Comunes";
 import { Encabezado, IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Categoria } from "@/content/categorias";
@@ -16,18 +14,13 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
   return (
     <>
       <section className="bg-hero text-hero-fg">
-        <div className={`${contenedor} grid items-center gap-10 py-16 md:grid-cols-[1.5fr_1fr] md:py-24`}>
+        <div className={`${contenedor} py-16 md:py-24`}>
           <Reveal>
-            <p className="versalitas flex items-center gap-3">
-              <Destello className="h-3 w-3" /> {t.eyebrow}
-            </p>
+            <p className="versalitas">{t.eyebrow}</p>
             <h1 className="titulo mt-6 text-[clamp(3rem,7vw,6.2rem)]">
               {t.titulo} <em className={cat.slug === "mujer" ? "" : "texto-dorado"}>{t.enfasis}</em>
             </h1>
             <p className="mt-8 max-w-lg text-[1.02rem] leading-[1.8] opacity-85">{t.texto}</p>
-          </Reveal>
-          <Reveal delay={150} className="mx-auto w-40 md:w-56">
-            <FrascoPerfume className="w-full drop-shadow-[0_24px_30px_rgb(20_18_16/0.35)]" />
           </Reveal>
         </div>
       </section>
@@ -48,7 +41,9 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
                   <ul className="mt-8 flex-1 space-y-3 border-t border-current/15 pt-6 text-left text-[0.88rem]">
                     {p.incluye.map((item) => (
                       <li key={item} className="flex gap-3">
-                        <Destello className="mt-1.5 h-3 w-3 shrink-0" />
+                        <span className="shrink-0 text-oro" aria-hidden>
+                          ✓
+                        </span>
                         {item}
                       </li>
                     ))}
@@ -71,7 +66,6 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
       </section>
 
       <section className="bg-papel-2">
-        <Guirnalda className="h-12 w-full" />
         <div className={`${contenedor} py-20 md:py-28`}>
           <Reveal>
             <Encabezado eyebrow={t.compEyebrow} centrado>
@@ -85,7 +79,7 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
                   <th className="py-4 font-normal" />
                   {cat.paquetes.map((p) => (
                     <th key={p.nombre} className="titulo px-4 py-4 text-center text-xl font-normal">
-                      {p.nombre.split(" ")[0]}
+                      {p.corto}
                     </th>
                   ))}
                 </tr>
@@ -95,7 +89,7 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
                   <tr key={fila.rasgo} className="border-b border-linea">
                     <th className="py-4 pr-4 text-[0.92rem] font-normal">{fila.rasgo}</th>
                     {fila.valores.map((v, i) => (
-                      <td key={i} className={`px-4 py-4 text-center text-[0.9rem] ${v === "✦" ? "text-oro" : v === "—" ? "text-suave/50" : ""}`}>
+                      <td key={i} className={`px-4 py-4 text-center text-[0.9rem] ${v === "✓" ? "text-oro" : v === "—" ? "text-suave/50" : ""}`}>
                         {v}
                       </td>
                     ))}
@@ -108,6 +102,33 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
       </section>
 
       <section className="bg-papel">
+        <div className={`${contenedor} py-20 md:py-28`}>
+          <Reveal>
+            <Encabezado eyebrow={t.extrasEyebrow} centrado>
+              {t.extrasTitulo} <em className="text-oro">{t.extrasEnfasis}</em>
+            </Encabezado>
+            <p className="mx-auto mt-6 max-w-xl text-center leading-[1.8] text-suave">{t.extrasTexto}</p>
+          </Reveal>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {t.extras.map((extra, i) => (
+              <Reveal key={extra.nombre} delay={i * 100} className="flex flex-col rounded-[2rem] border border-oro/40 bg-papel-2 p-7">
+                <h3 className="titulo text-2xl">{extra.nombre}</h3>
+                <p className="mt-3 flex-1 text-[0.9rem] leading-relaxed text-suave">{extra.texto}</p>
+                <a
+                  href={whatsappUrl(d.wa.extra(extra.nombre, cat.label))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex w-fit items-center gap-2 border-b border-tinta/30 pb-1 text-[0.72rem] tracking-[0.14em] uppercase hover:border-tinta"
+                >
+                  <IconoWhatsApp className="h-4 w-4" /> {t.extrasBoton}
+                </a>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-papel-2">
         <div className={`${contenedor} grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1.6fr]`}>
           <Reveal>
             <Encabezado eyebrow={t.faqEyebrow}>

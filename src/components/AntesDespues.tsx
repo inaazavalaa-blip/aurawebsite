@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { Ramo } from "@/components/ornamentos/Botanica";
 import type { Imagen } from "@/content/categorias";
 import type { Lang } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
@@ -50,7 +49,6 @@ export default function AntesDespues({ lang, antes, despues, pie = "" }: Props) 
           <Image src={despues.src} alt={despues.alt} fill sizes="50vw" className="object-cover" />
         ) : (
           <div className="relative h-full overflow-hidden bg-flora">
-            <Ramo className="absolute -bottom-4 right-[6%] h-[62%] opacity-90" />
             <span className="versalitas absolute right-[13%] top-[30%] text-[0.6rem]">{t.despues}</span>
           </div>
         )}
