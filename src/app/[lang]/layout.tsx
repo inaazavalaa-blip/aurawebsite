@@ -1,26 +1,9 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Jost, Pinyon_Script } from "next/font/google";
 import "../globals.css";
+import { clasesFuentes } from "@/app/fuentes";
 import { alternativas, SITIO } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
 import { idiomaValido, parametrosIdioma, type ParamsLang } from "@/i18n/params";
-
-const bodoni = Bodoni_Moda({
-  variable: "--font-bodoni",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-});
-
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin"],
-});
-
-const pinyon = Pinyon_Script({
-  variable: "--font-pinyon",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 export const dynamicParams = false;
 export const generateStaticParams = parametrosIdioma;
@@ -46,7 +29,7 @@ export default async function RootLayout({
   const lang = idiomaValido((await params).lang);
   return (
     <html lang={lang}>
-      <body className={`${bodoni.variable} ${jost.variable} ${pinyon.variable} antialiased`}>{children}</body>
+      <body className={`${clasesFuentes} antialiased`}>{children}</body>
     </html>
   );
 }

@@ -101,6 +101,48 @@ npm run build
 
 Si termina sin errores en rojo, se puede publicar.
 
+## Panel de reservas y clientes
+
+El panel está en `/admin`. Cada formulario de reserva se guarda ahí y además abre WhatsApp.
+En cada reserva puedes cambiar el estado y escribir notas internas. La pestaña Clientes las
+agrupa por teléfono. El botón **ES / EN** de arriba cambia el idioma del panel y lo recuerda.
+Sus textos están en `src/app/admin/textos.ts`.
+
+**Configuración inicial (solo una vez):**
+
+1. En Supabase, abre **SQL Editor**, pega el contenido de
+   `supabase/migrations/20261108000000_reservas.sql` y ejecútalo.
+2. En **Authentication > Users**, crea tu usuario con correo y contraseña.
+3. En **Authentication > Sign In / Providers**, desactiva el registro de usuarios nuevos.
+4. En **SQL Editor**, autoriza tu cuenta (cambia el correo por el tuyo):
+
+   ```sql
+   insert into public.administradores (user_id)
+   select id from auth.users where email = 'tu@correo.com';
+   ```
+
+5. En **Project Settings > API** copia la URL y la clave pública (`anon` o `publishable`).
+   **Nunca uses la clave `service_role` o `secret`**.
+6. Para probar en tu computadora, crea un archivo `.env.local` en la carpeta del proyecto.
+   Para el sitio publicado, agrega lo mismo en Vercel, en **Settings > Environment
+   Variables**, y vuelve a publicar:
+
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://TU-PROYECTO.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=TU-CLAVE-PUBLICA
+   ```
+
+**Aviso de privacidad:** está en `src/app/[lang]/privacidad/page.tsx`. Cuando tengas el
+domicilio postal, agrégalo ahí (en español y en inglés), y pide a un profesional que revise
+el aviso.
+
+| Qué ves en el panel | Qué hacer |
+| --- | --- |
+| "Aún no está conectado a Supabase" | Faltan las claves del paso 6 |
+| "No se pudieron cargar las reservas" | Falta ejecutar el paso 1 |
+| "Esta cuenta no tiene permiso" | Falta el paso 4 |
+| Llega el WhatsApp, pero no aparece en el panel | Revisa los pasos 1 y 6 |
+
 ## Si te atoras
 
 Pídele ayuda a Claude contándole qué querías cambiar, qué ves en pantalla y el mensaje de

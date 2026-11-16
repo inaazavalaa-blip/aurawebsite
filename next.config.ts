@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         { source: "/", destination: "/es" },
         {
-          source: "/:path((?!en(?:/|$)|es(?:/|$)|_next/|api/|.*\\..*).+)",
+          source: "/:path((?!en(?:/|$)|es(?:/|$)|admin(?:/|$)|_next/|api/|.*\\..*).+)",
           destination: "/es/:path",
         },
       ],

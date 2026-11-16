@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { IconoWhatsApp } from "@/components/ui";
 import { enlaces, whatsappUrl, type Categoria } from "@/content/categorias";
 import type { Lang } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
+import { guardarReserva } from "@/lib/guardarReserva";
 
 const campo =
   "w-full border-b border-tinta/25 bg-transparent py-3 outline-none transition-colors placeholder:text-suave/60 focus:border-oro";
@@ -26,15 +28,37 @@ export default function FormularioReserva({ lang, cat }: { lang: Lang; cat: Cate
     });
   }
 
+  /** Guarda en segundo plano: si falla, el cliente igual llega a WhatsApp o al correo. */
+  function guardar(form: HTMLFormElement) {
+    const d = new FormData(form);
+    const valor = (k: string) => String(d.get(k) ?? "");
+    guardarReserva({
+      nombre: valor("nombre"),
+      telefono: valor("telefono"),
+      correo: valor("correo"),
+      categoria: cat.slug,
+      idioma: lang,
+      servicio: valor("servicio"),
+      modalidad: valor("modalidad"),
+      fecha: valor("fecha"),
+      mensaje: valor("mensaje"),
+      consentimiento: d.get("consentimiento") === "on",
+      sitio: valor("sitio"),
+    }).catch(() => {});
+  }
+
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // WhatsApp debe abrirse primero: si se espera a guardar, el navegador bloquea la ventana.
     window.open(whatsappUrl(mensaje(e.currentTarget)), "_blank", "noopener,noreferrer");
+    guardar(e.currentTarget);
     setEnviado(true);
   }
 
   function porCorreo(e: React.MouseEvent<HTMLButtonElement>) {
     const form = e.currentTarget.form;
     if (!form || !form.reportValidity()) return;
+    guardar(form);
     window.location.href = `mailto:${enlaces.email}?subject=${encodeURIComponent(t.asunto(cat.label))}&body=${encodeURIComponent(mensaje(form))}`;
   }
 
@@ -42,8 +66,28 @@ export default function FormularioReserva({ lang, cat }: { lang: Lang; cat: Cate
     <form onSubmit={onSubmit} className="grid gap-8 sm:grid-cols-2">
       <label className="sm:col-span-2">
         <span className="versalitas text-[0.6rem] text-suave">{t.nombre}</span>
-        <input name="nombre" required autoComplete="name" placeholder={t.nombrePh} className={campo} />
+        <input name="nombre" required maxLength={120} autoComplete="name" placeholder={t.nombrePh} className={campo} />
       </label>
+      <label>
+        <span className="versalitas text-[0.6rem] text-suave">{t.telefono}</span>
+        <input
+          name="telefono"
+          type="tel"
+          required
+          autoComplete="tel"
+          pattern="[+0-9() \-]{7,30}"
+          title={t.telefonoAyuda}
+          placeholder={t.telefonoPh}
+          className={campo}
+        />
+      </label>
+      <label>
+        <span className="versalitas text-[0.6rem] text-suave">{t.correoCampo}</span>
+        <input name="correo" type="email" maxLength={200} autoComplete="email" placeholder={t.correoPh} className={campo} />
+      </label>
+      {/* Trampa para robots: las personas no ven este campo. */}
+      <input name="sitio" tabIndex={-1} autoComplete="off" aria-hidden className="absolute -left-[9999px] h-px w-px opacity-0" />
+
       <label>
         <span className="versalitas text-[0.6rem] text-suave">{t.servicio}</span>
         <select name="servicio" required defaultValue="" className={campo}>
@@ -73,7 +117,17 @@ export default function FormularioReserva({ lang, cat }: { lang: Lang; cat: Cate
       </fieldset>
       <label className="sm:col-span-2">
         <span className="versalitas text-[0.6rem] text-suave">{t.cambiar}</span>
-        <textarea name="mensaje" rows={3} placeholder={t.cambiarPh} className={`${campo} resize-none`} />
+        <textarea name="mensaje" rows={3} maxLength={2000} placeholder={t.cambiarPh} className={`${campo} resize-none`} />
+      </label>
+      <label className="flex items-start gap-3 text-[0.85rem] text-suave sm:col-span-2">
+        <input type="checkbox" name="consentimiento" required className="mt-1 accent-[var(--oro)]" />
+        <span>
+          {t.acepto}{" "}
+          <Link href={lang === "es" ? "/privacidad" : "/en/privacidad"} target="_blank" className="underline hover:text-tinta">
+            {t.aviso}
+          </Link>
+          .
+        </span>
       </label>
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
         <button
