@@ -19,7 +19,8 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  await supabase.auth.getUser();
+  // Renueva la sesión si está por vencer. getClaims evita ir a Supabase cuando no hace falta.
+  await supabase.auth.getClaims();
   return respuesta;
 }
 

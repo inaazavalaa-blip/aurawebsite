@@ -14,10 +14,8 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
   const supabase = await clienteServidor();
 
   if (supabase) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user && !error) redirect("/admin");
+    const { data } = await supabase.auth.getClaims();
+    if (data?.claims?.sub && !error) redirect("/admin");
   }
 
   return (
