@@ -4,6 +4,7 @@ import { clasesFuentes } from "@/app/fuentes";
 import { alternativas, SITIO } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
 import { idiomaValido, parametrosIdioma, type ParamsLang } from "@/i18n/params";
+import { Analytics } from "@vercel/analytics/next";
 
 export const dynamicParams = false;
 export const generateStaticParams = parametrosIdioma;
@@ -29,7 +30,10 @@ export default async function RootLayout({
   const lang = idiomaValido((await params).lang);
   return (
     <html lang={lang}>
-      <body className={`${clasesFuentes} antialiased`}>{children}</body>
+      <body className={`${clasesFuentes} antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
