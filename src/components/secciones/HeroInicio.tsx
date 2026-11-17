@@ -40,7 +40,7 @@ export default function HeroInicio({ lang, cat }: { lang: Lang; cat: Categoria }
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease, delay: 0.6 }}
-            className="titulo mt-8 text-[clamp(3rem,6.6vw,6.2rem)]"
+            className="titulo mt-8 text-balance text-[clamp(2.8rem,5.8vw,5.6rem)] [&_em]:text-balance"
           >
             {cat.hero.titulo}
             <em className={`mt-2 block ${mujer ? "text-tinta" : "texto-dorado"}`}>{cat.hero.enfasis}</em>

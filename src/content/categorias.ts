@@ -72,7 +72,7 @@ const fotos = {
   versalles: unsplash("1633117678740-989810c62541", 1400),
   klimt: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gustav_Klimt_016.jpg",
   mujerChoix: unsplash("1685206752060-d200820e092c", 900),
-  mujerHero: unsplash("1743660606584-a08c89003d13", 1100),
+  mujerHero: "/images/mujer-portada.jpg",
   mujerCabello: unsplash("1580618672591-eb180b1a973f", 900),
   mujerRostro: unsplash("1636023730877-233b9237d4ec", 900),
   hombreChoix: "/images/hombre-choix.jpg",
@@ -217,7 +217,7 @@ const mujerEs: Categoria = {
     enfasis: "puede hacer por ti.",
     intro:
       "Cabello, rostro, color, silueta y armario. Diseñamos tu imagen completa para que cada vez que te mires sientas que por fin te ves como eres.",
-    imagen: { src: fotos.mujerHero, alt: "Mujer con vestido amarillo y sombrero en una sesión editorial" },
+    imagen: { src: fotos.mujerHero, alt: "Vestido bordado con mosaico dorado inspirado en El beso de Klimt" },
   },
   areas: [
     {
@@ -316,7 +316,7 @@ const mujerEn: Categoria = {
     enfasis: "can do for you.",
     intro:
       "Hair, face, colour, silhouette and wardrobe. We design your complete image so that every time you look in the mirror you finally see yourself as you are.",
-    imagen: { src: fotos.mujerHero, alt: "Woman in a yellow dress and hat in an editorial shoot" },
+    imagen: { src: fotos.mujerHero, alt: "Embroidered dress with a gold mosaic inspired by Klimt's The Kiss" },
   },
   areas: [
     {
