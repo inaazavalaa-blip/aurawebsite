@@ -38,6 +38,20 @@ export async function cambiarIdioma(formulario: FormData) {
   revalidatePath("/admin", "layout");
 }
 
+const estadosPedido = ["pagado", "en_proceso", "entregado", "reembolsado"];
+
+export async function actualizarPedido(formulario: FormData) {
+  const { supabase } = await exigirAdmin();
+  const id = String(formulario.get("id") ?? "");
+  const estado = String(formulario.get("estado") ?? "");
+  const notas = String(formulario.get("notas") ?? "").trim().slice(0, 5000);
+  if (!id || !estadosPedido.includes(estado)) return;
+
+  const { error } = await supabase.from("pedidos").update({ estado, notas: notas || null }).eq("id", id);
+  if (error) console.error("No se pudo actualizar el pedido:", error.code);
+  revalidatePath("/admin/pedidos");
+}
+
 export async function actualizarReserva(formulario: FormData) {
   const { supabase } = await exigirAdmin();
   const id = String(formulario.get("id") ?? "");

@@ -9,7 +9,7 @@ import { imagenes } from "@/content/categorias";
 import type { Lang } from "@/i18n/config";
 import { dic, type Diccionario } from "@/i18n/diccionarios";
 
-type ObjetoId = keyof Diccionario["maison"]["objetos"];
+type ObjetoId = keyof Diccionario["esencia"]["objetos"];
 
 const dibujos: Record<ObjetoId, ReactNode> = {
   versalles: (
@@ -30,7 +30,7 @@ const orden: ObjetoId[] = ["versalles", "klimt", "rodin", "busto"];
 
 /** Gabinete de curiosidades: las inspiraciones de la marca, como un escaparate de anticuario. */
 export default function Gabinete({ lang }: { lang: Lang }) {
-  const textos = dic(lang).maison.objetos;
+  const textos = dic(lang).esencia.objetos;
   const objetos = orden.map((id) => ({ id, ...textos[id], dibujo: dibujos[id] }));
   const [activoId, setActivoId] = useState<ObjetoId>("versalles");
   const activo = objetos.find((o) => o.id === activoId) ?? objetos[0];

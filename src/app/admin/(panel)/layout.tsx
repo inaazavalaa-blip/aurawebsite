@@ -23,6 +23,9 @@ export default async function PanelLayout({ children }: { children: React.ReactN
               <Link href="/admin" className="hover:text-oro">
                 {t.reservas}
               </Link>
+              <Link href="/admin/pedidos" className="hover:text-oro">
+                {t.pedidos}
+              </Link>
               <Link href="/admin/clientes" className="hover:text-oro">
                 {t.clientes}
               </Link>

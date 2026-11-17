@@ -7,8 +7,8 @@ export function esIdioma(valor: string): valor is Lang {
   return (idiomas as readonly string[]).includes(valor);
 }
 
-export type SeccionId = "transformacion" | "vitrina" | "servicios" | "maison" | "reserva";
-export const secciones: SeccionId[] = ["transformacion", "vitrina", "servicios", "maison", "reserva"];
+export type SeccionId = "servicios" | "metodo" | "esencia" | "contratar";
+export const secciones: SeccionId[] = ["servicios", "metodo", "esencia", "contratar"];
 
 /** Slugs de URL por idioma. Los ids internos siguen en español. */
 export const slugsCategoria: Record<Lang, Record<CategoriaSlug, string>> = {
@@ -18,18 +18,16 @@ export const slugsCategoria: Record<Lang, Record<CategoriaSlug, string>> = {
 
 export const slugsSeccion: Record<Lang, Record<SeccionId, string>> = {
   es: {
-    transformacion: "transformacion",
-    vitrina: "vitrina",
     servicios: "servicios",
-    maison: "maison",
-    reserva: "reserva",
+    metodo: "metodo",
+    esencia: "esencia",
+    contratar: "contratar",
   },
   en: {
-    transformacion: "transformation",
-    vitrina: "showcase",
     servicios: "services",
-    maison: "maison",
-    reserva: "booking",
+    metodo: "method",
+    esencia: "essence",
+    contratar: "book",
   },
 };
 
@@ -44,8 +42,8 @@ export function seccionDesdeSlug(lang: Lang, slug: string): SeccionId | undefine
 }
 
 /**
- * URL pública. El español vive en la raíz (/mujer/vitrina) y el inglés bajo /en
- * (/en/women/showcase); next.config reescribe la raíz hacia el segmento [lang]="es".
+ * URL pública. El español vive en la raíz (/mujer/metodo) y el inglés bajo /en
+ * (/en/women/method); next.config reescribe la raíz hacia el segmento [lang]="es".
  */
 export function ruta(lang: Lang, cat?: CategoriaSlug, seccion?: SeccionId) {
   const base = lang === "es" ? "" : "/en";

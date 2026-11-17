@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { MarcoTipo } from "@/content/categorias";
+
+export type MarcoTipo = "arco" | "sol" | "cuadrilobulo";
 
 type Props = { children?: ReactNode; className?: string };
 

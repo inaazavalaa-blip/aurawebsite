@@ -1,10 +1,11 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 export function Logo({ className = "", claro = false }: { className?: string; claro?: boolean }) {
   return (
     <span className={`inline-flex flex-col items-center leading-none ${className}`}>
       <span className={`font-script text-[2.6rem] leading-[0.8] ${claro ? "texto-dorado" : ""}`}>Aura</span>
-      <span className="mt-1 text-[0.5rem] font-medium tracking-[0.42em] uppercase">Maison d&apos;image</span>
+      <span className="mt-1 text-[0.5rem] font-medium tracking-[0.42em] uppercase">Image Studio</span>
     </span>
   );
 }
@@ -70,12 +71,16 @@ export function BotonPrincipal({
     oro: "dorado text-laca hover:brightness-110",
     claro: "border border-current hover:bg-laca hover:text-papel",
   }[variante];
+  const clases = `group inline-flex items-center justify-center gap-4 rounded-full px-7 py-4 text-[0.75rem] font-medium tracking-[0.18em] uppercase transition-all ${estilos} ${className}`;
+  if (!externo) {
+    return (
+      <Link href={href} className={clases}>
+        {children}
+      </Link>
+    );
+  }
   return (
-    <a
-      href={href}
-      {...(externo ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={`group inline-flex items-center justify-center gap-4 rounded-full px-7 py-4 text-[0.75rem] font-medium tracking-[0.18em] uppercase transition-all ${estilos} ${className}`}
-    >
+    <a href={href} target="_blank" rel="noopener noreferrer" className={clases}>
       {children}
     </a>
   );

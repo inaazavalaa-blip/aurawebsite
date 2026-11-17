@@ -1,12 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { Busto } from "@/components/ornamentos/Curiosidades";
 import { FondoKlimt } from "@/components/ornamentos/Klimt";
 import { EspejoSol } from "@/components/ornamentos/Marcos";
-import PiezaIcono from "@/components/vitrina/PiezaIcono";
 import { BotonPrincipal, Encabezado, Flecha, IconoWhatsApp } from "@/components/ui";
-import { whatsappUrl, type Area, type Categoria } from "@/content/categorias";
+import { whatsappUrl, type Categoria } from "@/content/categorias";
 import { ruta, type Lang } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
 
@@ -30,59 +28,24 @@ export function Marquesina({ palabras, tono = "laca" }: { palabras: string[]; to
   );
 }
 
-/** Ilustración o foto que representa cada área de la transformación. */
-export function IlustracionArea({ area, cat }: { area: Area; cat: Categoria }) {
-  if (area.imagen) {
-    return <Image src={area.imagen.src} alt={area.imagen.alt} fill sizes="(min-width: 768px) 30vw, 70vw" className="object-cover" />;
-  }
-  if (area.id === "color") {
-    return (
-      <div
-        className="h-full w-full"
-        style={{
-          background:
-            "conic-gradient(from 20deg, #d9506b, #f08aa0, #8b6bc8, #5b7fd1, #a9c4e6, #3e8e4e, #9fc7a4, #f3d33b, #d9b45a, #b0653f, #d9506b)",
-        }}
-      >
-        <div className="grid h-full w-full place-items-center">
-          <div className="h-[46%] w-[46%] rounded-full bg-papel shadow-inner" />
-        </div>
-      </div>
-    );
-  }
-  if (area.id === "silueta") {
-    return (
-      <div className="grid h-full w-full place-items-center bg-papel-2 p-[12%]">
-        <Busto className="h-full" collar={cat.slug === "mujer" ? "#f3ede0" : "#d9b45a"} />
-      </div>
-    );
-  }
-  const [a, b] = cat.slug === "mujer" ? (["vestido", "#f3d33b"] as const) : (["blazer", "#2f5d46"] as const);
-  return (
-    <div className="flex h-full w-full items-center justify-center gap-2 bg-papel-2 p-[16%]">
-      <PiezaIcono tipo={a} color={b} className="h-full" />
-      <PiezaIcono tipo="bolso" color="#1d1b19" className="h-1/2 self-end" />
-    </div>
-  );
-}
-
-export function Medallones({ lang, cat }: { lang: Lang; cat: Categoria }) {
-  const t = dic(lang).comunes;
+/** Presentación breve de las cinco áreas del Método; cada una abre su área en El Método Aura. */
+export function MetodoBreve({ lang, cat }: { lang: Lang; cat: Categoria }) {
+  const t = dic(lang).inicio;
   return (
     <section className="relative bg-papel">
       <div className={`${contenedor} py-24 md:py-32`}>
         <Reveal>
-          <Encabezado eyebrow={t.medallonesEyebrow} centrado>
-            {t.medallonesTitulo} <em className="text-oro">{t.medallonesEnfasis}</em>
+          <Encabezado eyebrow={t.metodoEyebrow} centrado>
+            {t.metodoTitulo} <em className="text-oro">{t.metodoEnfasis}</em>
           </Encabezado>
-          <p className="mx-auto mt-6 max-w-xl text-center leading-[1.8] text-suave">{t.medallonesTexto}</p>
+          <p className="mx-auto mt-6 max-w-xl text-center leading-[1.8] text-suave">{t.metodoTexto}</p>
         </Reveal>
         <ol className="mt-16 grid grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-5">
           {cat.areas.map((area, i) => (
             <Reveal as="li" key={area.id} delay={i * 90} className={i === 4 ? "col-span-2 md:col-span-1" : ""}>
-              <Link href={`${ruta(lang, cat.slug, "transformacion")}#${area.id}`} className="group block text-center">
+              <Link href={`${ruta(lang, cat.slug, "metodo")}?area=${area.id}`} className="group block text-center">
                 <EspejoSol className="mx-auto w-full max-w-[220px] transition-transform duration-700 group-hover:rotate-6 group-hover:scale-105">
-                  <IlustracionArea area={area} cat={cat} />
+                  <Image src={area.imagen.src} alt="" fill sizes="(min-width: 768px) 18vw, 45vw" className="object-cover" />
                 </EspejoSol>
                 <p className="titulo mt-4 text-lg text-oro">{area.numeral}</p>
                 <h3 className="titulo mt-1 text-2xl">{area.nombre}</h3>
@@ -111,6 +74,7 @@ export function CitaKlimt({ lang }: { lang: Lang }) {
   );
 }
 
+/** Llamada final a contratar, presente al pie de cada sección. */
 export function LlamadoFinal({ lang, cat }: { lang: Lang; cat: Categoria }) {
   const t = dic(lang);
   return (
@@ -123,16 +87,17 @@ export function LlamadoFinal({ lang, cat }: { lang: Lang; cat: Categoria }) {
           <p className="mt-6 max-w-lg leading-[1.8] text-tinta/80">{t.comunes.llamadoTexto}</p>
         </Reveal>
         <Reveal delay={150} className="flex flex-col items-start gap-4 md:items-end">
-          <BotonPrincipal href={whatsappUrl(t.wa.agendar(cat.label))} externo>
-            <IconoWhatsApp className="h-4 w-4" />
-            {t.comunes.llamadoBoton}
+          <BotonPrincipal href={ruta(lang, cat.slug, "contratar")}>
+            {t.comunes.llamadoBoton} <Flecha />
           </BotonPrincipal>
-          <Link
-            href={ruta(lang, cat.slug, "reserva")}
-            className="group inline-flex items-center gap-3 text-[0.8rem] tracking-[0.14em] uppercase"
+          <a
+            href={whatsappUrl(t.wa.agendar(cat.label))}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 text-[0.8rem] tracking-[0.14em] uppercase hover:text-tinta/70"
           >
-            {t.comunes.llamadoReserva} <Flecha />
-          </Link>
+            <IconoWhatsApp className="h-4 w-4" /> {t.comunes.llamadoWhatsApp}
+          </a>
         </Reveal>
       </div>
     </section>

@@ -3,11 +3,10 @@ import { alternativas, type Lang, type SeccionId } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
 import { parametrosSeccion, resolverSeccion, type ParamsSeccion } from "@/i18n/params";
 import type { Categoria } from "@/content/categorias";
-import Maison from "@/vistas/Maison";
-import Reserva from "@/vistas/Reserva";
+import Contratar from "@/vistas/Contratar";
+import Esencia from "@/vistas/Esencia";
+import Metodo from "@/vistas/Metodo";
 import Servicios from "@/vistas/Servicios";
-import Transformacion from "@/vistas/Transformacion";
-import Vitrina from "@/vistas/Vitrina";
 
 export const dynamicParams = false;
 
@@ -16,11 +15,10 @@ export async function generateStaticParams({ params }: { params: { lang: string 
 }
 
 const vistas: Record<SeccionId, (p: { lang: Lang; cat: Categoria }) => React.ReactNode> = {
-  transformacion: Transformacion,
-  vitrina: Vitrina,
   servicios: Servicios,
-  maison: Maison,
-  reserva: Reserva,
+  metodo: Metodo,
+  esencia: Esencia,
+  contratar: Contratar,
 };
 
 export async function generateMetadata({ params }: { params: ParamsSeccion }): Promise<Metadata> {

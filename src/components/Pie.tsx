@@ -4,7 +4,7 @@ import { IconoWhatsApp, Logo } from "@/components/ui";
 import { categorias, enlaces, whatsappUrl, type CategoriaSlug } from "@/content/categorias";
 import { ruta, type Lang } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
-import { enlacesNav } from "@/i18n/navegacion";
+import { enlacesCompletos } from "@/i18n/navegacion";
 
 export default function Pie({ lang, cat }: { lang: Lang; cat: CategoriaSlug }) {
   const t = dic(lang);
@@ -19,7 +19,7 @@ export default function Pie({ lang, cat }: { lang: Lang; cat: CategoriaSlug }) {
           <p className="mt-6 max-w-xs text-[0.85rem] leading-relaxed text-papel/70">{t.pie.texto}</p>
         </div>
         <nav aria-label="Footer" className="grid content-start gap-3 text-[0.85rem]">
-          {[...enlacesNav(lang), { seccion: "reserva" as const, label: t.nav.reserva }].map((p) => (
+          {enlacesCompletos(lang).map((p) => (
             <Link key={p.label} href={ruta(lang, cat, p.seccion)} className="w-fit text-papel/80 hover:text-pan">
               {p.label}
             </Link>
@@ -47,7 +47,7 @@ export default function Pie({ lang, cat }: { lang: Lang; cat: CategoriaSlug }) {
         </div>
       </div>
       <p className="border-t border-papel/10 px-5 py-6 text-center text-[0.7rem] tracking-[0.2em] text-papel/50 uppercase">
-        © {new Date().getFullYear()} Aura · Maison d&apos;image
+        © {new Date().getFullYear()} Aura · Image Studio
       </p>
     </footer>
   );

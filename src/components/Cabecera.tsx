@@ -8,7 +8,7 @@ import { Logo } from "@/components/ui";
 import { categorias, slugs, whatsappUrl, type CategoriaSlug } from "@/content/categorias";
 import { analizarRuta, ruta, type Lang, type SeccionId } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
-import { enlacesNav } from "@/i18n/navegacion";
+import { enlacesCompletos, enlacesNav } from "@/i18n/navegacion";
 
 export default function Cabecera({ lang, cat }: { lang: Lang; cat: CategoriaSlug }) {
   const pathname = usePathname();
@@ -60,10 +60,11 @@ export default function Cabecera({ lang, cat }: { lang: Lang; cat: CategoriaSlug
           <SwitchCategoria lang={lang} cat={cat} seccion={actual} />
           <SwitchIdioma lang={lang} cat={cat} seccion={actual} />
           <Link
-            href={ruta(lang, cat, "reserva")}
+            href={ruta(lang, cat, "contratar")}
+            aria-current={actual === "contratar" ? "page" : undefined}
             className="dorado rounded-full px-6 py-3 text-[0.72rem] font-medium tracking-[0.18em] text-laca uppercase transition hover:brightness-110"
           >
-            {t.nav.reservar}
+            {t.nav.contratar}
           </Link>
         </div>
 
@@ -89,12 +90,13 @@ export default function Cabecera({ lang, cat }: { lang: Lang; cat: CategoriaSlug
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-flora px-6 pb-10 pt-28"
           >
-            {[...enlacesNav(lang), { seccion: "reserva" as SeccionId, label: t.nav.reserva }].map((p, i) => (
+            {enlacesCompletos(lang).map((p, i) => (
               <motion.div key={p.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.05 }}>
                 <Link
                   href={ruta(lang, cat, p.seccion)}
                   onClick={() => setAbierto(false)}
-                  className="titulo block border-b border-tinta/15 py-3 text-4xl"
+                  aria-current={actual === p.seccion ? "page" : undefined}
+                  className={`titulo block border-b border-tinta/15 py-3 text-4xl ${actual === p.seccion ? "italic text-oro" : ""}`}
                 >
                   {p.label}
                 </Link>

@@ -7,8 +7,8 @@ import { useRef } from "react";
 import { FondoKlimt } from "@/components/ornamentos/Klimt";
 import { MarcoArco } from "@/components/ornamentos/Marcos";
 import PanDeOro from "@/components/three/PanDeOroLazy";
-import { BotonPrincipal, Flecha, IconoWhatsApp } from "@/components/ui";
-import { whatsappUrl, type Categoria } from "@/content/categorias";
+import { BotonPrincipal, Flecha } from "@/components/ui";
+import type { Categoria } from "@/content/categorias";
 import { ruta, type Lang } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
 
@@ -59,19 +59,14 @@ export default function HeroInicio({ lang, cat }: { lang: Lang; cat: Categoria }
             transition={{ duration: 1, ease, delay: 0.95 }}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <BotonPrincipal
-              href={whatsappUrl(t.wa.empezar(cat.label))}
-              externo
-              variante={mujer ? "laca" : "oro"}
-            >
-              <IconoWhatsApp className="h-4 w-4" />
-              {t.inicio.empezar}
+            <BotonPrincipal href={ruta(lang, cat.slug, "contratar")} variante={mujer ? "laca" : "oro"}>
+              {t.inicio.empezar} <Flecha />
             </BotonPrincipal>
             <Link
-              href={ruta(lang, cat.slug, "transformacion")}
+              href={ruta(lang, cat.slug, "metodo")}
               className="group inline-flex items-center gap-3 border-b border-current/40 pb-1 text-[0.8rem] tracking-[0.14em] uppercase hover:border-current"
             >
-              {t.inicio.verTransformacion} <Flecha />
+              {t.inicio.verMetodo} <Flecha />
             </Link>
           </motion.div>
         </div>

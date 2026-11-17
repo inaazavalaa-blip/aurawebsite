@@ -1,10 +1,11 @@
+import Link from "next/link";
 import Acordeon from "@/components/Acordeon";
 import Reveal from "@/components/Reveal";
 import { MarcoArco } from "@/components/ornamentos/Marcos";
 import { contenedor, LlamadoFinal } from "@/components/secciones/Comunes";
-import { Encabezado, IconoWhatsApp } from "@/components/ui";
-import { whatsappUrl, type Categoria } from "@/content/categorias";
-import type { Lang } from "@/i18n/config";
+import { Encabezado, Flecha, IconoWhatsApp } from "@/components/ui";
+import { pasosProceso, whatsappUrl, type Categoria } from "@/content/categorias";
+import { ruta, type Lang } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
 
 export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria }) {
@@ -48,20 +49,46 @@ export default function Servicios({ lang, cat }: { lang: Lang; cat: Categoria })
                       </li>
                     ))}
                   </ul>
-                  <a
-                    href={whatsappUrl(d.wa.paquete(p.nombre, cat.label))}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={`${ruta(lang, cat.slug, "contratar")}?paquete=${p.id}`}
                     className={`mt-10 inline-flex items-center justify-center gap-3 rounded-full px-6 py-4 text-[0.72rem] tracking-[0.16em] uppercase transition ${
                       p.destacado ? "dorado text-laca hover:brightness-110" : "bg-laca text-papel hover:bg-tinta"
                     }`}
                   >
-                    <IconoWhatsApp className="h-4 w-4" /> {t.quiero}
+                    {t.quiero} <Flecha />
+                  </Link>
+                  <a
+                    href={whatsappUrl(d.wa.paquete(p.nombre, cat.label))}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center justify-center gap-2 text-[0.72rem] tracking-[0.12em] uppercase opacity-70 hover:opacity-100"
+                  >
+                    <IconoWhatsApp className="h-4 w-4" /> {t.preguntar}
                   </a>
                 </div>
               </MarcoArco>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* Cómo funciona */}
+      <section className="bg-flora">
+        <div className={`${contenedor} py-20 md:py-28`}>
+          <Reveal>
+            <Encabezado eyebrow={t.procesoEyebrow} centrado>
+              {t.procesoTitulo} <em>{t.procesoEnfasis}</em>
+            </Encabezado>
+          </Reveal>
+          <ol className="mt-16 grid gap-10 md:grid-cols-4">
+            {pasosProceso[lang].map((p, i) => (
+              <Reveal as="li" key={p.titulo} delay={i * 110} className="border-t border-tinta/25 pt-6">
+                <span className="titulo text-5xl italic">{p.numeral}</span>
+                <h3 className="titulo mt-4 text-2xl">{p.titulo}</h3>
+                <p className="mt-2 text-[0.9rem] leading-relaxed text-tinta/75">{p.texto}</p>
+              </Reveal>
+            ))}
+          </ol>
         </div>
       </section>
 

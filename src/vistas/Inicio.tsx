@@ -1,90 +1,58 @@
+import Image from "next/image";
 import Link from "next/link";
-import AntesDespues from "@/components/AntesDespues";
 import Reveal from "@/components/Reveal";
-import { EspejoCuadrilobulo } from "@/components/ornamentos/Marcos";
+import { MarcoArco } from "@/components/ornamentos/Marcos";
 import HeroInicio from "@/components/secciones/HeroInicio";
-import { CitaKlimt, contenedor, LlamadoFinal, Marquesina, Medallones } from "@/components/secciones/Comunes";
-import PiezaIcono from "@/components/vitrina/PiezaIcono";
+import { contenedor, LlamadoFinal, Marquesina, MetodoBreve } from "@/components/secciones/Comunes";
+import Maniqui from "@/components/vitrina/Maniqui";
 import { Encabezado, Flecha } from "@/components/ui";
 import type { Categoria } from "@/content/categorias";
-import { familias, piezasDe } from "@/content/vitrina";
+import { piezaPorId, type Pieza } from "@/content/vitrina";
 import { ruta, type Lang } from "@/i18n/config";
 import { dic } from "@/i18n/diccionarios";
 
 export default function Inicio({ lang, cat }: { lang: Lang; cat: Categoria }) {
-  const t = dic(lang).inicio;
-  const piezas = piezasDe(lang, cat.slug);
+  const d = dic(lang);
+  const t = d.inicio;
+  const color = cat.areas.find((a) => a.id === "color");
+  const rostro = cat.areas.find((a) => a.id === "rostro");
+  const silueta = cat.areas.find((a) => a.id === "silueta");
+  const base = piezaPorId(lang, cat.slug, cat.unaPrenda.base);
 
   return (
     <>
+      {/* 1. Propuesta de valor */}
       <HeroInicio lang={lang} cat={cat} />
       <Marquesina palabras={cat.areas.map((a) => a.nombre)} />
-      <Medallones lang={lang} cat={cat} />
 
-      {/* Adelanto de La Vitrina: un muro en degradado como el Colorama */}
+      {/* 2. Qué es la asesoría de imagen de Aura */}
       <section className="bg-papel-2">
-        <div className={`${contenedor} grid gap-14 py-24 md:py-32 lg:grid-cols-[1fr_1.3fr] lg:items-center`}>
-          <Reveal>
-            <Encabezado eyebrow={t.vitrinaEyebrow}>
-              {t.vitrinaTitulo} <em className="text-oro">{t.vitrinaEnfasis}</em>
-            </Encabezado>
-            <p className="mt-6 max-w-md leading-[1.8] text-suave">{t.vitrinaTexto}</p>
-            <Link
-              href={ruta(lang, cat.slug, "vitrina")}
-              className="group mt-10 inline-flex items-center gap-4 rounded-full bg-laca px-7 py-4 text-[0.75rem] tracking-[0.18em] text-papel uppercase"
-            >
-              {t.vitrinaCta} <Flecha />
-            </Link>
+        <div className={`${contenedor} grid items-center gap-14 py-24 md:py-32 lg:grid-cols-[0.9fr_1.1fr]`}>
+          <Reveal className="mx-auto w-full max-w-[380px]">
+            <MarcoArco className="aspect-[3/4]">
+              <Image src={cat.choix.imagen.src} alt={cat.choix.imagen.alt} fill sizes="380px" className="object-cover" />
+            </MarcoArco>
           </Reveal>
           <Reveal delay={150}>
-            <Link
-              href={ruta(lang, cat.slug, "vitrina")}
-              className="group grid grid-cols-4 gap-1.5 rounded-t-[999px] bg-laca p-3 pt-10"
-              aria-label={t.vitrinaAria}
-            >
-              {familias.map((f) => {
-                const delPiso = piezas.filter((x) => x.familia === f.id).slice(0, 3);
-                return (
-                  <div
-                    key={f.id}
-                    className="flex aspect-[3/4] flex-col items-center justify-around p-2 transition-transform duration-500 group-hover:-translate-y-1"
-                    style={{ background: f.fondo }}
-                  >
-                    {delPiso.map((x) => (
-                      <PiezaIcono key={x.id} tipo={x.tipo} color={x.color} className="h-[24%] max-w-[80%]" />
-                    ))}
-                  </div>
-                );
-              })}
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Antes y después */}
-      <section className="bg-papel">
-        <div className={`${contenedor} grid gap-14 py-24 md:py-32 lg:grid-cols-2 lg:items-center`}>
-          <Reveal className="order-2 lg:order-1">
-            <EspejoCuadrilobulo className="mx-auto w-full max-w-[520px]">
-              <AntesDespues lang={lang} pie={t.adPie} />
-            </EspejoCuadrilobulo>
-          </Reveal>
-          <Reveal delay={150} className="order-1 lg:order-2">
-            <Encabezado eyebrow={t.adEyebrow}>
-              {t.adTitulo} <em className="text-oro">{t.adEnfasis}</em>
+            <Encabezado eyebrow={t.introEyebrow}>
+              {t.introTitulo} <em className="text-oro">{t.introEnfasis}</em>
             </Encabezado>
-            <p className="mt-6 max-w-md leading-[1.8] text-suave">{t.adTexto}</p>
-            <Link
-              href={ruta(lang, cat.slug, "transformacion")}
-              className="group mt-8 inline-flex items-center gap-3 border-b border-tinta/30 pb-1 text-[0.8rem] tracking-[0.14em] uppercase"
-            >
-              {t.adCta} <Flecha />
-            </Link>
+            <p className="mt-6 max-w-xl leading-[1.85] text-suave">{t.introTexto}</p>
+            <ul className="mt-10 flex flex-wrap gap-3">
+              {t.introPuntos.map((p) => (
+                <li key={p} className="rounded-full border border-oro/50 px-4 py-2 text-[0.8rem] tracking-[0.06em]">
+                  {p}
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </section>
 
-      {/* Resumen de servicios */}
+      {/* 3. El Método Aura, en breve */}
+      <MetodoBreve lang={lang} cat={cat} />
+
+      {/* 4. Los dos paquetes */}
       <section className="bg-papel-2">
         <div className={`${contenedor} py-24 md:py-32`}>
           <Reveal>
@@ -119,8 +87,101 @@ export default function Inicio({ lang, cat }: { lang: Lang; cat: Categoria }) {
         </div>
       </section>
 
-      <CitaKlimt lang={lang} />
+      {/* 5. Resultados esperados: ejemplos ilustrativos de entregables */}
+      <section className="bg-papel">
+        <div className={`${contenedor} py-24 md:py-32`}>
+          <Reveal>
+            <Encabezado eyebrow={t.resultadosEyebrow} centrado>
+              {t.resultadosTitulo} <em className="text-oro">{t.resultadosEnfasis}</em>
+            </Encabezado>
+            <p className="mx-auto mt-6 max-w-xl text-center leading-[1.8] text-suave">{t.resultadosTexto}</p>
+          </Reveal>
+
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
+            <Entregable titulo={t.entregables[0].titulo} texto={t.entregables[0].texto} sello={d.comunes.ilustrativo} delay={0}>
+              <div className="flex h-full items-end gap-1.5">
+                {color?.muestra.colores?.map((c, i) => (
+                  <span key={c} className="flex-1 rounded-t-full" style={{ background: c, height: `${55 + ((i * 17) % 40)}%` }} />
+                ))}
+              </div>
+            </Entregable>
+            <Entregable titulo={t.entregables[1].titulo} texto={t.entregables[1].texto} sello={d.comunes.ilustrativo} delay={120}>
+              <ul className="grid h-full content-center gap-2">
+                {[...(rostro?.muestra.puntos.slice(0, 2) ?? []), ...(silueta?.muestra.puntos.slice(0, 2) ?? [])].map((p) => (
+                  <li key={p} className="rounded-full bg-papel px-3 py-1.5 text-[0.78rem]">
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </Entregable>
+            <Entregable titulo={t.entregables[2].titulo} texto={t.entregables[2].texto} sello={d.comunes.ilustrativo} delay={240}>
+              <div className="relative grid h-full place-items-center">
+                <div className="absolute h-full w-[56%] translate-x-5 rotate-6 rounded-md bg-papel shadow-sm" />
+                <div className="relative flex h-full w-[56%] flex-col items-center rounded-md bg-papel px-3 pb-3 pt-4 shadow-md">
+                  <span className="font-script text-3xl leading-none">Aura</span>
+                  <span className="mt-1 text-[0.4rem] tracking-[0.3em] uppercase">Dossier</span>
+                  <span className="mt-auto flex w-full gap-0.5">
+                    {color?.muestra.colores?.map((c) => <span key={c} className="h-2 flex-1" style={{ background: c }} />)}
+                  </span>
+                  <span className="mt-2 h-1 w-3/4 rounded bg-tinta/10" />
+                  <span className="mt-1.5 h-1 w-1/2 rounded bg-tinta/10" />
+                </div>
+              </div>
+            </Entregable>
+          </div>
+
+          {/* Una prenda, tres looks */}
+          <div className="mt-20 grid items-center gap-10 rounded-[2rem] bg-papel-2 p-6 md:p-10 lg:grid-cols-[1fr_2fr]">
+            <Reveal>
+              <p className="versalitas text-[0.6rem] text-suave">{d.comunes.ilustrativo}</p>
+              <h3 className="titulo mt-3 text-3xl">{t.prendaTitulo}</h3>
+              <p className="mt-4 max-w-sm leading-[1.8] text-suave">{t.prendaTexto(base?.nombre.toLowerCase() ?? "")}</p>
+            </Reveal>
+            <div className="grid grid-cols-3 gap-3 md:gap-6">
+              {cat.unaPrenda.looks.map((look, i) => {
+                const seleccion = look.piezas.map((id) => piezaPorId(lang, cat.slug, id)).filter(Boolean) as Pieza[];
+                return (
+                  <Reveal key={look.ocasion} delay={i * 120} className="text-center">
+                    <div className="mx-auto max-w-[200px] rounded-t-[999px] bg-papel p-3 pt-8">
+                      <Maniqui seleccion={seleccion} />
+                    </div>
+                    <p className="versalitas mt-4 text-[0.6rem] text-oro">{look.ocasion}</p>
+                    <p className="titulo mt-1 text-lg italic md:text-xl">{look.nota}</p>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Contratar */}
       <LlamadoFinal lang={lang} cat={cat} />
     </>
+  );
+}
+
+function Entregable({
+  titulo,
+  texto,
+  sello,
+  delay,
+  children,
+}: {
+  titulo: string;
+  texto: string;
+  sello: string;
+  delay: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <Reveal delay={delay} className="flex flex-col">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-t-[999px] border border-oro/40 bg-papel-2 px-[14%] pb-6 pt-[18%]">
+        {children}
+      </div>
+      <p className="versalitas mt-5 text-[0.55rem] text-suave">{sello}</p>
+      <h3 className="titulo mt-2 text-2xl">{titulo}</h3>
+      <p className="mt-2 text-[0.9rem] leading-relaxed text-suave">{texto}</p>
+    </Reveal>
   );
 }

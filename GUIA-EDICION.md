@@ -13,7 +13,9 @@ Esta guía es para hacer cambios sin saber programar. Casi todo lo que querrás 
 | Títulos de portada de Mujer / Hombre | `src/content/categorias.ts` | `mujerEs`, `mujerEn`, `hombreEs`, `hombreEn` |
 | Fotos | `src/content/categorias.ts` | `const fotos` |
 | Menú, botones, preguntas frecuentes, formulario, textos generales | `src/i18n/diccionarios.ts` | el texto que ves en la página |
-| Prendas y outfits de La Vitrina | `src/content/vitrina.ts` | el nombre de la prenda |
+| Las 5 áreas de El Método Aura (textos, fotos y ejemplos) | `src/content/categorias.ts` | `areas:` |
+| Textos de La Esencia Aura (filosofía, valores, visión) | `src/i18n/diccionarios.ts` | `esencia:` |
+| Prendas de los looks de ejemplo ("Una prenda, tres looks") | `src/content/vitrina.ts` | el nombre de la prenda |
 
 **Truco:** si no sabes dónde está un texto, cópialo de la página y búscalo en todo el
 proyecto con `Ctrl+Shift+F` en tu editor.
@@ -27,18 +29,28 @@ en `En` es inglés.
 
 Las direcciones son:
 
-- Español: `/mujer`, `/hombre/servicios`
-- Inglés: `/en/women`, `/en/men/services`
+- Español: `/mujer`, `/mujer/servicios`, `/mujer/metodo`, `/mujer/esencia`, `/mujer/contratar`
+- Inglés: `/en/women`, `/en/women/services`, `/en/women/method`, `/en/women/essence`, `/en/women/book`
+
+(Igual para Hombre: `/hombre/...` y `/en/men/...`.) Las direcciones antiguas (Vitrina,
+Transformación, Maison y Reserva) redirigen solas a su sección nueva.
+
+En El Método Aura puedes enlazar un área concreta: `/mujer/metodo?area=color`
+(`color`, `rostro`, `silueta`, `armario` o `estilo`). Las fotos de las áreas son ilustrativas;
+si un día usas fotos de clientes reales, pide su autorización por escrito.
 
 ## Cómo cambiar un texto o un precio
 
-Cambia **solo lo que está entre comillas** y deja las comillas y la coma final.
+En los textos, cambia **solo lo que está entre comillas** y deja las comillas y la coma final.
+
+Los precios van sin comillas ni símbolos, solo el número:
 
 ```ts
-{ usd: "$49 USD", mxn: "$990 MXN" },   // Bien: solo cambian los números
+{ id: "vip", usd: 280, mxn: 5500 },   // Bien: solo cambian los números
 ```
 
-Los precios se escriben una sola vez y sirven para Mujer, Hombre y los dos idiomas.
+Los precios se escriben una sola vez y sirven para Mujer, Hombre, los dos idiomas **y lo
+que cobra Stripe**. Si cambias un precio aquí, el pago en línea cobra el precio nuevo.
 
 ## Cómo cambiar una foto
 
