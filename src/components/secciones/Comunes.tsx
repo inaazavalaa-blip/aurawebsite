@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { FondoKlimt } from "@/components/ornamentos/Klimt";
 import { EspejoSol } from "@/components/ornamentos/Marcos";
 import { BotonPrincipal, Encabezado, Flecha, IconoWhatsApp } from "@/components/ui";
 import { whatsappUrl, type Categoria } from "@/content/categorias";
@@ -55,21 +54,6 @@ export function MetodoBreve({ lang, cat }: { lang: Lang; cat: Categoria }) {
           ))}
         </ol>
       </div>
-    </section>
-  );
-}
-
-export function CitaKlimt({ lang }: { lang: Lang }) {
-  const t = dic(lang).comunes;
-  return (
-    <section className="relative overflow-hidden bg-laca py-28 text-papel md:py-36">
-      <FondoKlimt variante="espirales" opacidad={0.35} />
-      <Reveal className="relative mx-auto max-w-4xl px-5 text-center">
-        <blockquote className="titulo text-[clamp(2rem,4.4vw,3.8rem)] italic leading-tight">
-          {t.cita}
-        </blockquote>
-        <p className="versalitas mt-8 text-pan">{t.citaAutor}</p>
-      </Reveal>
     </section>
   );
 }

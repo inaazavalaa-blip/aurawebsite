@@ -69,8 +69,6 @@ export function whatsappUrl(texto: string) {
 }
 
 const fotos = {
-  versalles: unsplash("1633117678740-989810c62541", 1400),
-  klimt: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gustav_Klimt_016.jpg",
   mujerChoix: unsplash("1685206752060-d200820e092c", 900),
   mujerHero: "/images/mujer-portada.jpg",
   mujerCabello: unsplash("1580618672591-eb180b1a973f", 900),
@@ -87,16 +85,26 @@ const fotos = {
   hombreArmario: unsplash("1633655442432-620aa55d7ac1", 1200),
   mujerEstilo: unsplash("1770970831074-6e88b6cc260b", 1200),
   hombreEstilo: unsplash("1613379171002-3610ae01cf4a", 1200),
+  // La Esencia Aura (fotos editoriales de Unsplash, licencia libre; no son clientes).
+  esenciaMujer: unsplash("1680120887603-e94dae4f9d58", 1200),
+  esenciaHombre: unsplash("1761499101317-e32c4ed50b2f", 1200),
+  espejo: unsplash("1706586344846-ba9d9943b1e7", 1200),
+  textura: unsplash("1567620303833-93e9516cbc56", 800),
 };
 
-export const imagenes: Record<Lang, { versalles: Imagen; klimt: Imagen }> = {
+/** Fotos de La Esencia Aura: la portada cambia entre Mujer y Hombre; el resto es común. */
+export const imagenesEsencia: Record<Lang, Record<CategoriaSlug, Imagen> & { espejo: Imagen; textura: Imagen }> = {
   es: {
-    versalles: { src: fotos.versalles, alt: "Salón palaciego con candelabros dorados" },
-    klimt: { src: fotos.klimt, alt: "El beso, de Gustav Klimt (1908), detalle en pan de oro" },
+    mujer: { src: fotos.esenciaMujer, alt: "Prenda plisada en tono crema colgada en un perchero" },
+    hombre: { src: fotos.esenciaHombre, alt: "Saco de color claro colgado en un gancho" },
+    espejo: { src: fotos.espejo, alt: "Una mano se acerca a su reflejo en un espejo redondo" },
+    textura: { src: fotos.textura, alt: "Suéteres de punto en tonos neutros colgados en fila" },
   },
   en: {
-    versalles: { src: fotos.versalles, alt: "Palace hall with gilded chandeliers" },
-    klimt: { src: fotos.klimt, alt: "The Kiss by Gustav Klimt (1908), gold-leaf detail" },
+    mujer: { src: fotos.esenciaMujer, alt: "Cream pleated garment hanging on a rail" },
+    hombre: { src: fotos.esenciaHombre, alt: "Light-coloured jacket hanging on a hanger" },
+    espejo: { src: fotos.espejo, alt: "A hand reaching towards its reflection in a round mirror" },
+    textura: { src: fotos.textura, alt: "Knit sweaters in neutral tones hanging in a row" },
   },
 };
 

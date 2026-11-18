@@ -55,8 +55,6 @@ const es = {
     entrar: "Entrar",
   },
   comunes: {
-    cita: "«La elegancia es cuando el interior es tan bello como el exterior.»",
-    citaAutor: "Coco Chanel",
     llamadoTitulo: "Tu nueva imagen",
     llamadoEnfasis: "empieza aquí.",
     llamadoTexto: "Elige tu experiencia y cuéntanos qué te gustaría cambiar. Te respondemos con los siguientes pasos en menos de 24 horas.",
@@ -178,61 +176,35 @@ const es = {
   },
   esencia: {
     eyebrow: "La Esencia Aura",
-    titulo: "Tu estilo,",
-    enfasis: "comprendido y expresado.",
+    titulo: "Tu imagen no debería transformarte en alguien más.",
+    enfasis: "Debería reflejar quién eres.",
     texto:
-      "Aura es una propuesta de asesoría de imagen que te ayuda a comprender, desarrollar y expresar tu estilo personal. Nos inspira el barroco francés, el oro de Klimt y la frescura de un jardín en flor, y lo traducimos a una imagen moderna, elegante y profundamente tuya.",
+      "Aura es una propuesta de asesoría de imagen en línea diseñada para ayudarte a descubrir, potenciar y expresar tu verdadero estilo. No imponemos tendencias ni buscamos una apariencia genérica: partimos de tus características, tus preferencias y tu estilo de vida.",
     filosofiaEyebrow: "Nuestra filosofía",
-    filosofiaTitulo: "La imagen no es una tendencia.",
-    filosofiaEnfasis: "Es coherencia.",
-    filosofiaTexto:
-      "Tu imagen personal no consiste en seguir la moda ni en comprar ropa nueva. Es el encuentro entre tu personalidad, tus gustos, tu estilo de vida y tu apariencia. Cuando esas piezas están en armonía, no te disfrazas: te reconoces.",
-    gabineteEyebrow: "Lo que representa Aura",
-    gabineteTitulo: "Nuestros símbolos,",
-    gabineteEnfasis: "en un gabinete.",
-    objetos: {
-      versalles: {
-        nombre: "El espejo sol",
-        origen: "Versalles",
-        texto:
-          "Los espejos dorados de Versalles nos recuerdan que verse es un ritual. En Aura, cada cambio empieza frente a un espejo: el que te devuelve tu mejor versión.",
+    filosofiaTitulo: "Tres principios",
+    filosofiaEnfasis: "guían cada asesoría.",
+    pilares: [
+      {
+        titulo: "Autenticidad",
+        texto: "No imponemos un estilo. Partimos de tu personalidad y de tus preferencias para que te reconozcas en cada recomendación.",
       },
-      klimt: {
-        nombre: "El pan de oro",
-        origen: "Klimt, El beso",
-        texto:
-          "Oro, mosaicos y un prado de flores: Klimt nos enseñó que lo sofisticado también puede ser alegre. Por eso nuestro oro siempre va acompañado de color.",
+      {
+        titulo: "Armonía",
+        texto: "Trabajamos los distintos elementos de tu imagen para que funcionen juntos y formen una propuesta coherente.",
       },
-      rodin: {
-        nombre: "El abrazo de mármol",
-        origen: "Rodin, Le Baiser",
-        texto:
-          "La escultura francesa de Rodin habla de cercanía. Así trabajamos: una asesoría íntima, a tu lado, sin juicios y con mucho cuidado.",
+      {
+        titulo: "Funcionalidad",
+        texto: "Cada recomendación se adapta a tus necesidades y a tu estilo de vida, para que puedas llevarla a tu día a día.",
       },
-      busto: {
-        nombre: "El busto y las perlas",
-        origen: "El detalle",
-        texto:
-          "Un collar bien elegido cambia un look entero. Cuidamos los accesorios, el escote y cada detalle que enmarca tu rostro.",
-      },
-    },
-    besosTexto:
-      "Klimt pintó un abrazo en pan de oro; Rodin lo esculpió en mármol francés. Para nosotros, una imagen lograda es eso: el encuentro entre cómo te ven y quién eres. Cuando ambos se abrazan, aparece tu aura.",
-    valoresEyebrow: "Nuestros valores",
-    valoresTitulo: "Lo que define",
-    valoresEnfasis: "nuestro trabajo.",
-    valores: [
-      { titulo: "Autenticidad", texto: "No te convertimos en otra persona: revelamos la mejor versión de quien ya eres." },
-      { titulo: "Elegancia", texto: "Sofisticación con frescura y color. Nada rígido, nada que se sienta como un disfraz." },
-      { titulo: "Individualidad", texto: "No hay fórmulas iguales: cada recomendación nace de ti y de tu forma de vivir." },
-      { titulo: "Confianza", texto: "Un espacio cercano y sin juicios, donde te explicamos el porqué de cada decisión." },
-      { titulo: "Evolución personal", texto: "Tu estilo cambia contigo. Te damos herramientas para seguir decidiendo con seguridad." },
     ],
-    visionEyebrow: "Nuestra visión",
-    visionTitulo: "Una asesoría cuidada,",
-    visionEnfasis: "desde cualquier lugar.",
-    visionTexto:
-      "Queremos que una asesoría de imagen personalizada, atenta a cada detalle, sea accesible estés donde estés. Por eso trabajamos en línea, con sesiones en vivo y acompañamiento cercano.",
+    imagenEyebrow: "Nuestra forma de entender la imagen",
+    imagenTitulo: "Más allá de la ropa",
+    imagenEnfasis: "y de las tendencias.",
+    imagenTexto:
+      "Tu imagen es la forma en que te presentas al mundo: cómo te sientes al vestirte, cómo te mueves en tu día a día y lo que comunicas sin decir una palabra. Por eso una asesoría debe mirarte en tu conjunto —tu personalidad, tus gustos, tu rutina y tus objetivos— y no solo lo que hay en tu armario.",
+    cierreTitulo: "Una asesoría pensada para ti,",
+    cierreEnfasis: "no una fórmula para todos.",
+    cierreBoton: "Descubre nuestros servicios",
   },
   reserva: {
     eyebrow: "Contratar",
@@ -345,8 +317,6 @@ const en: Diccionario = {
     entrar: "Enter",
   },
   comunes: {
-    cita: "“Elegance is when the inside is as beautiful as the outside.”",
-    citaAutor: "Coco Chanel",
     llamadoTitulo: "Your new image",
     llamadoEnfasis: "starts here.",
     llamadoTexto: "Choose your experience and tell us what you'd like to change. We'll reply with the next steps within 24 hours.",
@@ -468,61 +438,35 @@ const en: Diccionario = {
   },
   esencia: {
     eyebrow: "The Aura Essence",
-    titulo: "Your style,",
-    enfasis: "understood and expressed.",
+    titulo: "Your image shouldn't turn you into someone else.",
+    enfasis: "It should reflect who you are.",
     texto:
-      "Aura is an image consulting practice that helps you understand, develop and express your personal style. We're inspired by French baroque, Klimt's gold and the freshness of a garden in bloom, and we translate it into a modern, elegant image that is deeply yours.",
+      "Aura is an online image consulting service designed to help you discover, enhance and express your true style. We don't impose trends or aim for a generic look: we start from your features, your preferences and your lifestyle.",
     filosofiaEyebrow: "Our philosophy",
-    filosofiaTitulo: "Image isn't a trend.",
-    filosofiaEnfasis: "It's coherence.",
-    filosofiaTexto:
-      "Your personal image isn't about following fashion or buying new clothes. It's where your personality, your tastes, your lifestyle and your appearance meet. When those pieces are in harmony, you're not wearing a costume: you recognise yourself.",
-    gabineteEyebrow: "What Aura stands for",
-    gabineteTitulo: "Our symbols,",
-    gabineteEnfasis: "in a cabinet.",
-    objetos: {
-      versalles: {
-        nombre: "The sun mirror",
-        origen: "Versailles",
-        texto:
-          "The gilded mirrors of Versailles remind us that seeing yourself is a ritual. At Aura, every change starts in front of a mirror: the one that shows you your best version.",
+    filosofiaTitulo: "Three principles",
+    filosofiaEnfasis: "guide every consultation.",
+    pilares: [
+      {
+        titulo: "Authenticity",
+        texto: "We don't impose a style. We start from your personality and preferences so you recognise yourself in every recommendation.",
       },
-      klimt: {
-        nombre: "The gold leaf",
-        origen: "Klimt, The Kiss",
-        texto:
-          "Gold, mosaics and a meadow of flowers: Klimt taught us that sophistication can also be joyful. That's why our gold always comes with colour.",
+      {
+        titulo: "Harmony",
+        texto: "We work on the different elements of your image so they come together into one coherent proposal.",
       },
-      rodin: {
-        nombre: "The marble embrace",
-        origen: "Rodin, Le Baiser",
-        texto:
-          "Rodin's French sculpture speaks of closeness. That's how we work: an intimate consultation, by your side, without judgement and with great care.",
+      {
+        titulo: "Functionality",
+        texto: "Every recommendation fits your needs and your lifestyle, so you can carry it into your everyday life.",
       },
-      busto: {
-        nombre: "The bust and the pearls",
-        origen: "The detail",
-        texto:
-          "A well-chosen necklace changes a whole look. We take care of accessories, necklines and every detail that frames your face.",
-      },
-    },
-    besosTexto:
-      "Klimt painted an embrace in gold leaf; Rodin carved one in French marble. To us, a well-crafted image is just that: the meeting between how others see you and who you are. When the two embrace, your aura appears.",
-    valoresEyebrow: "Our values",
-    valoresTitulo: "What defines",
-    valoresEnfasis: "our work.",
-    valores: [
-      { titulo: "Authenticity", texto: "We don't turn you into someone else: we reveal the best version of who you already are." },
-      { titulo: "Elegance", texto: "Sophistication with freshness and colour. Nothing stiff, nothing that feels like a costume." },
-      { titulo: "Individuality", texto: "There are no identical formulas: every recommendation starts with you and the way you live." },
-      { titulo: "Trust", texto: "A close, judgement-free space where we explain the reason behind every decision." },
-      { titulo: "Personal growth", texto: "Your style changes with you. We give you the tools to keep deciding with confidence." },
     ],
-    visionEyebrow: "Our vision",
-    visionTitulo: "A carefully crafted consultation,",
-    visionEnfasis: "from anywhere.",
-    visionTexto:
-      "We want a personalised image consultation, attentive to every detail, to be within reach wherever you are. That's why we work online, with live sessions and close support.",
+    imagenEyebrow: "How we see personal image",
+    imagenTitulo: "Beyond clothes",
+    imagenEnfasis: "and beyond trends.",
+    imagenTexto:
+      "Your image is how you present yourself to the world: how you feel when you get dressed, how you move through your day and what you communicate without saying a word. That's why a consultation should look at you as a whole — your personality, your tastes, your routine and your goals — not just at what's in your wardrobe.",
+    cierreTitulo: "A consultation designed for you,",
+    cierreEnfasis: "not a formula for everyone.",
+    cierreBoton: "Discover our services",
   },
   reserva: {
     eyebrow: "Book",

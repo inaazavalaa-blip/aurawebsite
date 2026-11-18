@@ -14,7 +14,8 @@ Esta guía es para hacer cambios sin saber programar. Casi todo lo que querrás 
 | Fotos | `src/content/categorias.ts` | `const fotos` |
 | Menú, botones, preguntas frecuentes, formulario, textos generales | `src/i18n/diccionarios.ts` | el texto que ves en la página |
 | Las 5 áreas de El Método Aura (textos, fotos y ejemplos) | `src/content/categorias.ts` | `areas:` |
-| Textos de La Esencia Aura (filosofía, valores, visión) | `src/i18n/diccionarios.ts` | `esencia:` |
+| Textos de La Esencia Aura (portada, tres principios, cierre) | `src/i18n/diccionarios.ts` | `esencia:` |
+| Fotos de La Esencia Aura | `src/content/categorias.ts` | `imagenesEsencia` |
 | Prendas de los looks de ejemplo ("Una prenda, tres looks") | `src/content/vitrina.ts` | el nombre de la prenda |
 
 **Truco:** si no sabes dónde está un texto, cópialo de la página y búscalo en todo el
